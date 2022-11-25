@@ -5,7 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import static com.fanta.Authorization.scanner;
-import static com.fanta.LogIn.*;
+import static com.fanta.Data.*;
 import static java.lang.System.out;
 
 public class Registration {
@@ -15,11 +15,16 @@ public class Registration {
             setNewLogin(scanner.nextLine());
             out.println("Вибери пароль");
             setNewPassword(scanner.nextLine());
-            writer.append("-----------------------------------------------------" + "\n" +
-                    "Логін: " + getNewLogin() + "\n" +
-                    "Пароль: " + getNewPassword() + "\n");
-            writer.close();
-            out.println("Успішно");
+            if (getNewLogin().length() <= 8 && >= 20)
+            if (getNewPassword().length() <= 8) {
+                out.println("Мінімальна довжина паролю 8 символів");
+            } else {
+                writer.append("-----------------------------------------------------" + "\n" +
+                        "Логін: " + getNewLogin() + "\n" +
+                        "Пароль: " + getNewPassword() + "\n");
+                writer.close();
+                out.println("Успішно");
+            }
         } catch (Exception exception) {
             out.println("Пусто");
         }
