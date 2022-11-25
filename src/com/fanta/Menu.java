@@ -9,7 +9,7 @@ public class Menu {
         String command;
 
         do{
-            System.out.println("Салам братку! Чого треба?");
+            System.out.println("Салам братку! Чого бажаєш?");
             System.out.println("1: Авторизуватися");
             System.out.println("2: Зареєструватися");
             System.out.println("3: Калькулятор");
@@ -20,10 +20,10 @@ public class Menu {
             switch (command){
 
                 case "1":
-                    LogIn.authorization();
+                    Authorization.authorization();
                     break;
                 case "2":
-                    LogIn.registration();
+                    Registration.registration();
                     break;
                 case "3":
                     Calculator.Calculations();
