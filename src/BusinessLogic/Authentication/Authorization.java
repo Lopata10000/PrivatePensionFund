@@ -1,4 +1,6 @@
-package com.fanta;
+package BusinessLogic.Authentication;
+
+import DataBase.Data;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -8,28 +10,22 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
-import static com.fanta.Data.*;
 import static java.lang.System.in;
 import static java.lang.System.out;
 
 public class Authorization {
     static Scanner scanner = new Scanner(in);
-    public static void authorization()
-    {
+    public static void authorization() {
         out.println("Ваш логін:");
-        setLogin(scanner.nextLine());
+        Data.setLogin(scanner.nextLine());
         out.println("Ваш пароль");
-        setPassword(scanner.nextLine());
-        try( FileReader reader= new FileReader(userData))
-        {
+        Data.setPassword(scanner.nextLine());
+        try (FileReader reader = new FileReader(Data.userData)) {
             Scanner scan = new Scanner(reader);
-
-            if (Files.lines(Paths.get(userData), StandardCharsets.UTF_8)
-                    .anyMatch(getLogin()::equals) && Files.lines(Paths.get(userData), StandardCharsets.UTF_8).anyMatch(getPassword()::equals))
-            {
+            if (Files.lines(Paths.get(Data.userData) , StandardCharsets.UTF_8)
+                    .anyMatch(Data.getLogin()::equals) && Files.lines(Paths.get(Data.userData) , StandardCharsets.UTF_8).anyMatch(Data.getPassword()::equals)) {
                 out.println("Такий акаунт знайдено");
-            }
-            else {
+            } else {
                 out.println("Такого акаунту немає");
             }
 
