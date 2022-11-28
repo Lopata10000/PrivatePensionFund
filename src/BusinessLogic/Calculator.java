@@ -1,4 +1,4 @@
-package com.fanta;
+package BusinessLogic;
 
 public class Calculator {
     public static void Calculations()
