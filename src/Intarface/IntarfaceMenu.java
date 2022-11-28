@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 import static java.lang.System.out;
 
-public class Menu {
+public class IntarfaceMenu {
     public static void mainMenu() throws IOException {
         Scanner scanner = new Scanner(System.in);
 
