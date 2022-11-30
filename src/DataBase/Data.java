@@ -1,18 +1,13 @@
 package DataBase;
 
-import javax.xml.validation.Validator;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Scanner;
-import java.nio.file.Files;
 
 import static java.lang.System.in;
 
 public class Data {
 
     public static Scanner scanner = new Scanner(in);
-    public static final String userData = "Users.txt";
+    public static final String userData = "./src/DataBase/Users.txt";
     public static String newLogin;
     public static String newPassword;
     public static String login;
