@@ -1,77 +1,57 @@
 package DataBase;
 
-import javax.crypto.*;
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
+import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 
 import static DataBase.Data.*;
 
 public class Encryption {
-    static KeyGenerator newkey;
-    static Cipher decript;
-    static SecretKey key = newkey.generateKey();
-    static Cipher cipher;
-    static byte[] bytesNewLogin;
+    public static final String initVector = "encryptionIntVec";
+    private static final String key = "aesEncryptionKey";
 
-    static {
-        try {
-            decript = Cipher.getInstance("AES");
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        } catch (NoSuchPaddingException e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            newkey = KeyGenerator.getInstance("AES");
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
-    }
+    public static void EncryptionLogin() throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException, UnsupportedEncodingException, InvalidAlgorithmParameterException {
+        IvParameterSpec parameter = new IvParameterSpec(initVector.getBytes(StandardCharsets.UTF_8));
+        SecretKeySpec newkey = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8) , "AES");
 
-    static {
-        try {
-            cipher = Cipher.getInstance("AES");
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        } catch (NoSuchPaddingException e) {
-            throw new RuntimeException(e);
-        }
-    }
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
+        cipher.init(Cipher.ENCRYPT_MODE , newkey , parameter);
 
-    static {
-        try {
-            bytesNewLogin = cipher.doFinal(newLogin.getBytes());
-        } catch (IllegalBlockSizeException e) {
-            throw new RuntimeException(e);
-        } catch (BadPaddingException e) {
-            throw new RuntimeException(e);
-        }
-    }
+        byte[] bytesNewLogin = cipher.doFinal(getNewLogin().getBytes());
 
-    public Encryption() throws NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException {
-    }
-
-    public static void EncryptionLogin() throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
-        Cipher cipher = Cipher.getInstance("AES");
-        cipher.init(Cipher.ENCRYPT_MODE , key);
         setNewLogin(String.valueOf(bytesNewLogin));
-
     }
 
-    public static void EncryptionPassword() throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
-        Cipher cipher = Cipher.getInstance("AES");
-        byte[] bytesNewPassword = cipher.doFinal(newPassword.getBytes());
+    public static void EncryptionPassword() throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException, UnsupportedEncodingException {
+        IvParameterSpec parameter = new IvParameterSpec(initVector.getBytes(StandardCharsets.UTF_8));
+        SecretKeySpec newkey = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8) , "AES");
+
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
+        cipher.init(Cipher.ENCRYPT_MODE , newkey , parameter);
+
+        byte[] bytesNewPassword = cipher.doFinal(getNewLogin().getBytes());
+
         setNewPassword(String.valueOf(bytesNewPassword));
     }
 
-    public static void DecryptionLogin() throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
-        decript.init(Cipher.ENCRYPT_MODE , key);
-        byte[] decriptLoginBytes = decript.doFinal(bytesNewLogin);
+    public static void DecryptionFile() throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException, UnsupportedEncodingException, InvalidAlgorithmParameterException {
+        IvParameterSpec iv = new IvParameterSpec(initVector.getBytes(StandardCharsets.UTF_8));
+        SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8) , "AES");
+
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
+        cipher.init(Cipher.DECRYPT_MODE , skeySpec , iv);
+        byte[] plainText = cipher.doFinal(Base64.getDecoder()
+                .decode(userData));
     }
 
-    public static void DecryptionPassword() throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
-        decript.init(Cipher.ENCRYPT_MODE , key);
-        byte[] decriptLoginBytes = decript.doFinal(bytesNewLogin);
-    }
 
 }
