@@ -1,56 +1,117 @@
 package DataBase;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.SecretKeySpec;
+import com.google.common.hash.Hashing;
+
+import javax.crypto.*;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.util.Base64;
+import java.security.Signature;
 
 import static DataBase.Data.*;
 
 public class Encryption {
-    public static final String initVector = "encryptionIntVec";
-    private static final String key = "aesEncryptionKey";
+    static KeyGenerator keyGenerator;
+    static SecretKey key = keyGenerator.generateKey();
 
-    public static void EncryptionLogin() throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException, UnsupportedEncodingException, InvalidAlgorithmParameterException {
-        IvParameterSpec parameter = new IvParameterSpec(initVector.getBytes(StandardCharsets.UTF_8));
-        SecretKeySpec newkey = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8) , "AES");
+    static {
+        try {
+            keyGenerator = KeyGenerator.getInstance("AES");
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
-        cipher.init(Cipher.ENCRYPT_MODE , newkey , parameter);
+    public Encryption() throws NoSuchAlgorithmException {
+    }
 
-        byte[] bytesNewLogin = cipher.doFinal(getNewLogin().getBytes());
-
-        setNewLogin(String.valueOf(bytesNewLogin));
+    public static void EncryptionGmail() throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException, IOException, InvalidAlgorithmParameterException, ShortBufferException {
+        Signature sign = Signature.getInstance("SHA256withRSA");
+        String sha256hex = Hashing.sha256().hashString(getGmail() , StandardCharsets.UTF_8).toString();
+        setNewLogin(sha256hex);
+//
+//        //Creating KeyPair generator object
+//        KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance("RSA");
+//
+//        //Initializing the key pair generator
+//        keyPairGen.initialize(2048);
+//
+//        //Generating the pair of keys
+//        KeyPair pair = keyPairGen.generateKeyPair();
+//
+//        //Creating a Cipher object
+//        Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+//
+//        //Initializing a Cipher object
+//        cipher.init(Cipher.ENCRYPT_MODE, pair.getPublic());
+//
+//        //Adding data to the cipher
+//        byte[] bytesNewLogin = getNewLogin().getBytes();
+//        cipher.update(bytesNewLogin);
+//
+//        //encrypting the data
+//        byte[] cipherText = cipher.doFinal();
+//        setNewLogin(String.valueOf(cipherText));
     }
 
     public static void EncryptionPassword() throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException, UnsupportedEncodingException {
-        IvParameterSpec parameter = new IvParameterSpec(initVector.getBytes(StandardCharsets.UTF_8));
-        SecretKeySpec newkey = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8) , "AES");
+        Signature sign = Signature.getInstance("SHA256withRSA");
 
-        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
-        cipher.init(Cipher.ENCRYPT_MODE , newkey , parameter);
+//        //Creating KeyPair generator object
+//        KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance("RSA");
+//
+//        //Initializing the key pair generator
+//        keyPairGen.initialize(2048);
+//
+//        //Generating the pair of keys
+//        KeyPair pair = keyPairGen.generateKeyPair();
+//
+//        //Creating a Cipher object
+//        Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+        String sha256hex = Hashing.sha256().hashString(getNewPassword() , StandardCharsets.UTF_8).toString();
+        setNewPassword(sha256hex);
 
-        byte[] bytesNewPassword = cipher.doFinal(getNewLogin().getBytes());
+        //Initializing a Cipher object
+//        cipher.init(Cipher.ENCRYPT_MODE, pair.getPublic());
+//
+//        //Adding data to the cipher
+//        byte[] bytesNewLogin = getNewPassword().getBytes();
+//        cipher.update(bytesNewLogin);
+//
+//        //encrypting the data
+//        byte[] cipherText = cipher.doFinal();
+//        setNewPassword(String.valueOf(cipherText));
+//        cipher.init(Cipher.ENCRYPT_MODE, pair.getPublic());
 
-        setNewPassword(String.valueOf(bytesNewPassword));
+        //Adding data to the cipher
+//        byte[] bytesFile = userData.getBytes();
+//        cipher.update(bytesFile);
+//
+//        //encrypting the data
+//        bytesFile = cipher.doFinal();
+//        cipher.init(Cipher.DECRYPT_MODE, pair.getPrivate());
+//        byte[] decipheredText = cipher.doFinal(bytesFile);
+//        cipher.update(decipheredText);
+//        System.out.println(new String(decipheredText));
+
     }
 
-    public static void DecryptionFile() throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException, UnsupportedEncodingException, InvalidAlgorithmParameterException {
-        IvParameterSpec iv = new IvParameterSpec(initVector.getBytes(StandardCharsets.UTF_8));
-        SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8) , "AES");
-
-        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
-        cipher.init(Cipher.DECRYPT_MODE , skeySpec , iv);
-        byte[] plainText = cipher.doFinal(Base64.getDecoder()
-                .decode(userData));
+    public static void DecryptionFile() throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException, IOException, InvalidAlgorithmParameterException {
+//        KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance("RSA");
+//
+//        //Initializing the key pair generator
+//        keyPairGen.initialize(2048);
+//
+//        //Generating the pair of keys
+//        KeyPair pair = keyPairGen.generateKeyPair();
+//        Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+//        cipher.init(Cipher.DECRYPT_MODE, pair.getPrivate());
+//        byte[] decipheredText = cipher.doFinal(cipherText);
+//        cipher.update(decipheredText);
+//        System.out.println(new String(decipheredText));
     }
 
 

@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="PrivatePensionFund:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/PrivatePensionFund_jar</output-path>
+    <root id="archive" name="PrivatePensionFund.jar">
+      <element id="module-output" name="PrivatePensionFund" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/guava-19.0.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
