@@ -33,6 +33,27 @@ public class Validation {
         return matcherPassword.matches();
     }
 
+    public static boolean isValidAge() {
+        String regex = "[0-9].{1,2}";
+        Pattern patternAge = Pattern.compile(regex);
+        Matcher matcherAge = patternAge.matcher(getAge());
+        return matcherAge.matches();
+    }
+
+    public static boolean isValidСontributions() {
+        String regex = "[0-9].{1,15}";
+        Pattern patternAge = Pattern.compile(regex);
+        Matcher matcherAge = patternAge.matcher(getInitialСontribution());
+        return matcherAge.matches();
+    }
+
+    public static boolean isValidRegularСontributions() {
+        String regex = "[0-9].{1,15}";
+        Pattern patternAge = Pattern.compile(regex);
+        Matcher matcherAge = patternAge.matcher(getRegularСontributions());
+        return matcherAge.matches();
+    }
+
     public static boolean isValidGmail() {
         String regex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}";
         //Compile regular expression to get the pattern
@@ -81,6 +102,7 @@ public class Validation {
                 Validation.gmailValidation();
         }
     }
+
     public static void passwordValidation() throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, IOException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, ShortBufferException {
         out.println("|------------------------------------------------------------------|" + "\n" +
                 "|Ваш пароль:                                                       |" + "\n" +
@@ -153,5 +175,45 @@ public class Validation {
         else {
             Registration.Registration();
         }
+    }
+
+    public static void ageValidation() {
+        out.println("|------------------------------------------------------------------|" + "\n" +
+                "|Уведіть свій вік:                                                 |" + "\n" +
+                "|------------------------------------------------------------------|");
+        setAge(scanner.nextLine());
+        if (!Validation.isValidAge()) {
+            out.println("|------------------------------------------------------------------|" + "\n" +
+                    "|Некоректний вік!                                                  |" + "\n" +
+                    "|------------------------------------------------------------------|");
+            ageValidation();
+        }
+    }
+
+    public static void contributionsValidation() {
+        out.println("|------------------------------------------------------------------|" + "\n" +
+                "|Уведіть свій перший вклад.                                        |" + "\n" +
+                "|------------------------------------------------------------------|");
+        setInitialСontribution(scanner.nextLine());
+        if (!Validation.isValidСontributions()) {
+            out.println("|------------------------------------------------------------------|" + "\n" +
+                    "|Уведено некректні дані (до 20 символі, тільки цифри!)             |" + "\n" +
+                    "|------------------------------------------------------------------|");
+            contributionsValidation();
+        }
+    }
+
+    public static void regularContributionsValidation() {
+        out.println("|------------------------------------------------------------------|" + "\n" +
+                "|Скільки ви готові відкладати кожного року?                        |" + "\n" +
+                "|------------------------------------------------------------------|");
+        setRegularСontributions(scanner.nextLine());
+        if (!Validation.isValidRegularСontributions()) {
+            out.println("|------------------------------------------------------------------|" + "\n" +
+                    "|Уведено некректні дані (до 20 символі, тільки цифри!)             |" + "\n" +
+                    "|------------------------------------------------------------------|");
+            regularContributionsValidation();
+        }
+
     }
 }

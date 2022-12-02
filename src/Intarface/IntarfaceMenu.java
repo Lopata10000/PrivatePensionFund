@@ -3,6 +3,7 @@ package Intarface;
 import BusinessLogic.AdminActions.View;
 import BusinessLogic.Authentication.Authorization;
 import BusinessLogic.Authentication.Registration;
+import BusinessLogic.Calculator;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -67,7 +68,7 @@ public class IntarfaceMenu {
                 Registration.Registration();
                 break;
             case "3":
-                View.VeiwList();
+                Calculator.Calculations();
                 break;
             case "4":
                 System.exit(0);
@@ -109,6 +110,7 @@ public class IntarfaceMenu {
             case "3":
                 break;
             case "4":
+                Calculator.Calculations();
                 break;
             case "5":
                 IntarfaceMenu.mainMenu();
@@ -151,6 +153,7 @@ public class IntarfaceMenu {
             case "3":
                 break;
             case "4":
+                Registration.Registration();
                 break;
             case "5":
                 IntarfaceMenu.mainMenu();

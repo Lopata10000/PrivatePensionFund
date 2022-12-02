@@ -14,12 +14,11 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;
 
-import static DataBase.Data.*;
+import static DataBase.Data.scanner;
+import static DataBase.Data.userData;
 import static java.lang.System.out;
 
 public class View {
-    public static File sourceFile = new File(userData);
-    public static File outputFile = new File(userData);
 
     public static void VeiwList() throws IOException, InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, ShortBufferException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
         Scanner in = new Scanner(Paths.get(userData) , StandardCharsets.UTF_8);
@@ -29,23 +28,38 @@ public class View {
         IntarfaceMenu.AdminMenu();
     }
 
-    public static void DeleadUser() throws IOException {
-        String line;
-        out.println("|------------------------------------------------------------------|" + "\n" +
-                "|Ваш пароль(English):                                              |" + "\n" +
-                "|------------------------------------------------------------------|");
-        setLogin(scanner.nextLine());
-        BufferedReader reader = new BufferedReader(new FileReader(sourceFile));
-        BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile));
-        while ((line = reader.readLine()) != null) {
-            if (!line.equals(getLogin())) {
-                writer.write(line);
-                writer.newLine();
-            }
+    public static void DeleadUser() throws IOException, InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, ShortBufferException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
+        View.VeiwList();
+        try {
+            out.println("|------------------------------------------------------------------|" + "\n" +
+                    "|Виберіть дані які ви хочете видалити                              |" + "\n" +
+                    "|------------------------------------------------------------------|");
+            int number = scanner.nextInt();
+            File tmp = File.createTempFile("tmp" , "");
+
+            BufferedReader reader = new BufferedReader(new FileReader(userData));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(tmp));
+
+            for (int i = 0; i < number; i++)
+                writer.write(String.format("%s%n" , reader.readLine()));
+
+            reader.readLine();
+
+            String userData;
+            while (null != (userData = reader.readLine()))
+                writer.write(String.format("%s%n" , userData));
+
+            reader.close();
+            writer.close();
+
+            File oldFile = new File(userData);
+            if (oldFile.delete())
+                tmp.renameTo(oldFile);
+            IntarfaceMenu.AdminMenu();
+        } catch (Exception ex) {
+            out.println("|------------------------------------------------------------------|" + "\n" +
+                    "|Дані відсутні.                                                    |" + "\n" +
+                    "|------------------------------------------------------------------|");
         }
-        reader.close();
-        writer.close();
-        sourceFile.delete();
-        outputFile.renameTo(sourceFile);
     }
 }

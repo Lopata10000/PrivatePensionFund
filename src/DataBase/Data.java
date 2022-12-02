@@ -3,6 +3,7 @@ package DataBase;
 import java.util.Scanner;
 
 import static java.lang.System.in;
+import static java.lang.System.out;
 
 public class Data {
 
@@ -11,10 +12,47 @@ public class Data {
     public static String newLogin;
 
     public static String gmail;
-    public static int age;
-    public static int initialСontribution;
-    public static int regularСontributions;
-    public static int retirementAge;
+    public static String age;
+    public static String initialСontribution;
+    public static String regularСontributions;
+    public static String loginForDelead;
+    public static int retirementAge = 60;
+
+    public static String getLoginForDelead() {
+        return loginForDelead;
+    }
+
+    public static void setLoginForDelead(String loginForDelead) {
+        Data.loginForDelead = loginForDelead;
+    }
+
+    public static String getAge() {
+        return age;
+    }
+
+    public static void setAge(String age) {
+        Data.age = age;
+    }
+
+    public static String getInitialСontribution() {
+        return initialСontribution;
+    }
+
+    public static void setInitialСontribution(String initialСontribution) {
+        Data.initialСontribution = initialСontribution;
+    }
+
+    public static String getRegularСontributions() {
+        return regularСontributions;
+    }
+
+    public static void setRegularСontributions(String regularСontributions) {
+        Data.regularСontributions = regularСontributions;
+    }
+
+    public static int getRetirementAge() {
+        return retirementAge;
+    }
 
     public static String getGmail() {
         return gmail;
@@ -25,8 +63,6 @@ public class Data {
     }
 
     public static String newPassword;
-    public static String login;
-    public static String password;
 
     public static String getNewLogin() {
         return newLogin;
@@ -44,20 +80,19 @@ public class Data {
         Data.newPassword = newPassword;
     }
 
-    public static String getLogin() {
-        return login;
-    }
-
-    public static void setLogin(String login) {
-        Data.login = login;
-    }
-
-    public static String getPassword() {
-        return password;
-    }
-
-    public static void setPassword(String password) {
-        Data.password = password;
+    public static double compoundInterest(double InitialСontribution1) {
+        int RegularСontribution = Integer.parseInt(getRegularСontributions());
+        int age = Integer.parseInt(getAge());
+        int pensionAge = (getRetirementAge() - age);
+        for (int i = 1; i < pensionAge; i++) {
+            InitialСontribution1 = InitialСontribution1 + RegularСontribution;
+            InitialСontribution1 = (InitialСontribution1 * (1.1));
+            out.println("|------------------------------------------------------------------|" + "\n" +
+                    "|За " + i + " рік|" + "\n" +
+                    "|------------------------------------------------------------------|" + "\n" +
+                    "|" + Math.round(InitialСontribution1) + "|" + "\n");
+        }
+        return InitialСontribution1;
     }
 
 }
