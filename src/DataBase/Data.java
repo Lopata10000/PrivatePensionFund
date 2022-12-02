@@ -9,9 +9,25 @@ public class Data {
     public static Scanner scanner = new Scanner(in);
     public static final String userData = "./src/DataBase/Users.txt";
     public static String newLogin;
+
+    public static String gmail;
+    public static int age;
+    public static int initialСontribution;
+    public static int regularСontributions;
+    public static int retirementAge;
+
+    public static String getGmail() {
+        return gmail;
+    }
+
+    public static void setGmail(String gmail) {
+        Data.gmail = gmail;
+    }
+
     public static String newPassword;
     public static String login;
     public static String password;
+
     public static String getNewLogin() {
         return newLogin;
     }
