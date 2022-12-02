@@ -7,7 +7,6 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.ShortBufferException;
-import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -21,26 +20,34 @@ import static DataBase.Data.*;
 import static java.lang.System.out;
 
 public class Check {
-    public static boolean checkUser() throws IOException {
-        FileReader fileWriter = new FileReader(userData);
-        BufferedReader reader = new BufferedReader(fileWriter);
-        String currentLine;
-        String[] data;
-        while (null != (currentLine = reader.readLine())) {
-            data = currentLine.split(", ");
-        }
-        return false;
-    }
-
     public static void checkAuthorization() throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, IOException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, ShortBufferException {
+        out.println("|------------------------------------------------------------------|" + "\n" +
+                "|Ваш логін:                                                        |" + "\n" +
+                "|------------------------------------------------------------------|");
+        setNewLogin(scanner.nextLine());
+        out.println("|------------------------------------------------------------------|" + "\n" +
+                "|Ваш e-mail:                                                       |" + "\n" +
+                "|------------------------------------------------------------------|");
+        setGmail(scanner.nextLine());
+        out.println("|------------------------------------------------------------------|" + "\n" +
+                "|Ваш пароль(English):                                              |" + "\n" +
+                "|------------------------------------------------------------------|");
+        setNewPassword(scanner.nextLine());
         Encryption.EncryptionPassword();
+        Encryption.EncryptionGmail();
         try (FileReader reader = new FileReader(userData)) {
-            if (Files.lines(Paths.get(userData) , StandardCharsets.UTF_8)
-                    .anyMatch(("Логін: " + getNewLogin())::equals) && Files.lines(Paths.get(userData) , StandardCharsets.UTF_8).anyMatch(("Пароль: " + getNewPassword())::equals)) {
-                IntarfaceMenu.ActionsWithAccounts();
+            if (Files.lines(Paths.get(userData) , StandardCharsets.UTF_8).anyMatch(("Логін: " + getNewLogin())::equals)
+                    && Files.lines(Paths.get(userData) , StandardCharsets.UTF_8).anyMatch(("Пароль: " + getNewPassword())::equals)
+                    && Files.lines(Paths.get(userData) , StandardCharsets.UTF_8).anyMatch(("E-mail: " + getGmail())::equals)) {
+                if (getNewLogin().equals("FantaPetro"))
+                    IntarfaceMenu.AdminMenu();
+                else
+                    IntarfaceMenu.ActionsWithAccounts();
             } else {
-                out.println("Такого акаунту немає");
-                Authorization.authorization();
+                out.println("|------------------------------------------------------------------|" + "\n" +
+                        "|Такого акаунту немає.                                             |" + "\n" +
+                        "|------------------------------------------------------------------|");
+                Authorization.Authorization();
             }
         }
     }
