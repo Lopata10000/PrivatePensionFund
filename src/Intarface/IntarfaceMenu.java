@@ -1,6 +1,6 @@
 package Intarface;
 
-import BusinessLogic.AdminActions.View;
+import BusinessLogic.AdminActions.AdminActions;
 import BusinessLogic.Authentication.Authorization;
 import BusinessLogic.Authentication.Registration;
 import BusinessLogic.Calculator;
@@ -15,7 +15,6 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;
 
-import static BusinessLogic.AdminActions.View.DeleadUser;
 import static DataBase.Data.getNewLogin;
 import static java.lang.System.out;
 
@@ -102,7 +101,7 @@ public class IntarfaceMenu {
         switch (command) {
 
             case "1":
-                View.VeiwList();
+                AdminActions.VeiwList();
                 break;
             case "2":
 
@@ -132,25 +131,26 @@ public class IntarfaceMenu {
                 "|------------------------------------------------------------------|" + "\n" +
                 "|1: Переглянути користувачів.                                      |" + "\n" +
                 "|------------------------------------------------------------------|" + "\n" +
-                "|2: Видалити користувача.                                          |" + "\n" +
+                "|2: Видалити дані.                                                 |" + "\n" +
                 "|------------------------------------------------------------------|" + "\n" +
                 "|3: Відредагувати дані.                                            |" + "\n" +
                 "|------------------------------------------------------------------|" + "\n" +
                 "|4: Добавити користувача.                                          |" + "\n" +
                 "|------------------------------------------------------------------|" + "\n" +
                 "|5: Вийти                                                          |" + "\n" +
-                "|------------------------------------------------------------------|" + "\n");
+                "|------------------------------------------------------------------|");
         command = scanner.nextLine();
 
         switch (command) {
 
             case "1":
-                View.VeiwList();
+                AdminActions.VeiwList();
                 break;
             case "2":
-                DeleadUser();
+                AdminActions.DeleadUser();
                 break;
             case "3":
+                AdminActions.Rewu();
                 break;
             case "4":
                 Registration.Registration();

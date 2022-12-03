@@ -40,18 +40,25 @@ public class Validation {
         return matcherAge.matches();
     }
 
+    public static boolean isValidLineDelead() {
+        String regex = "[0-9].{1,3}";
+        Pattern patternLineDelead = Pattern.compile(regex);
+        Matcher matcherLineDelead = patternLineDelead.matcher(getNumberForDelead());
+        return matcherLineDelead.matches();
+    }
+
     public static boolean isValidСontributions() {
         String regex = "[0-9].{1,15}";
-        Pattern patternAge = Pattern.compile(regex);
-        Matcher matcherAge = patternAge.matcher(getInitialСontribution());
-        return matcherAge.matches();
+        Pattern patternСontributions = Pattern.compile(regex);
+        Matcher matcherСontributions = patternСontributions.matcher(getInitialСontribution());
+        return matcherСontributions.matches();
     }
 
     public static boolean isValidRegularСontributions() {
         String regex = "[0-9].{1,15}";
-        Pattern patternAge = Pattern.compile(regex);
-        Matcher matcherAge = patternAge.matcher(getRegularСontributions());
-        return matcherAge.matches();
+        Pattern patternRegularСontributions = Pattern.compile(regex);
+        Matcher matcherRegularСontributions = patternRegularСontributions.matcher(getRegularСontributions());
+        return matcherRegularСontributions.matches();
     }
 
     public static boolean isValidGmail() {
@@ -159,9 +166,9 @@ public class Validation {
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(userData , true))) {
                 Encryption.EncryptionPassword();
                 writer.append("|------------------------------------------------------------------|" + "\n" +
-                        "Логін: " + getNewLogin() + "\n" +
+                        "Login: " + getNewLogin() + "\n" +
                         "E-mail: " + getGmail() + "\n" +
-                        "Пароль: " + getNewPassword() + "\n");
+                        "Password: " + getNewPassword() + "\n");
                 writer.close();
                 out.println("|------------------------------------------------------------------|" + "\n" +
                         "|Вас зареєстровано успішно!                                        |" + "\n" +
@@ -215,5 +222,32 @@ public class Validation {
             regularContributionsValidation();
         }
 
+    }
+
+    public static void lineForDelead() {
+        out.println("|------------------------------------------------------------------|" + "\n" +
+                "|Виберіть дані які ви хочете видалити                              |" + "\n" +
+                "|------------------------------------------------------------------|");
+        setNumberForDelead(scanner.nextLine());
+        if (!Validation.isValidLineDelead() || Integer.parseInt(getNumberForDelead()) >= getNumberLine()) {
+            out.println("|------------------------------------------------------------------|" + "\n" +
+                    "|Даних під таким номером немає.                                    |" + "\n" +
+                    "|------------------------------------------------------------------|");
+            lineForDelead();
+        }
+
+    }
+
+    public static void lineForChange() {
+        out.println("|---------------------------------------------------------------------|" + "\n" +
+                "|Уведіть рядок який ви хочете змінити(Повний рядок окрім номера рядка)|" + "\n" +
+                "|---------------------------------------------------------------------|");
+        setChangeLine(scanner.nextLine());
+        if (Integer.parseInt(getChangeLine()) > getNumberLine()) {
+            out.println("|------------------------------------------------------------------|" + "\n" +
+                    "|Даних під таким номером немає.                                    |" + "\n" +
+                    "|------------------------------------------------------------------|");
+            lineForChange();
+        }
     }
 }

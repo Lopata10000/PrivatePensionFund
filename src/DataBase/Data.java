@@ -10,21 +10,40 @@ public class Data {
     public static Scanner scanner = new Scanner(in);
     public static final String userData = "./src/DataBase/Users.txt";
     public static String newLogin;
+    public static String changeLine;
+    public static int numberLine;
+    public static String numberForDelead;
 
     public static String gmail;
     public static String age;
     public static String initialСontribution;
     public static String regularСontributions;
-    public static String loginForDelead;
+
+    public static String getChangeLine() {
+        return changeLine;
+    }
+
+    public static void setChangeLine(String changeLine) {
+        Data.changeLine = changeLine;
+    }
+
+    public static String getNumberForDelead() {
+        return numberForDelead;
+    }
+
+    public static void setNumberForDelead(String numberForDelead) {
+        Data.numberForDelead = numberForDelead;
+    }
+
+    public static int getNumberLine() {
+        return numberLine;
+    }
+
+    public static void setNumberLine(int numberLine) {
+        Data.numberLine = numberLine;
+    }
+
     public static int retirementAge = 60;
-
-    public static String getLoginForDelead() {
-        return loginForDelead;
-    }
-
-    public static void setLoginForDelead(String loginForDelead) {
-        Data.loginForDelead = loginForDelead;
-    }
 
     public static String getAge() {
         return age;
