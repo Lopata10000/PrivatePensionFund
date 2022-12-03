@@ -1,7 +1,7 @@
-package BusinessLogic.Authentication;
+package businessLogic.authentication;
 
-import BusinessLogic.UserActions.ActionsWithData;
-import DataBase.Encryption;
+import businessLogic.userActions.ActionsWithData;
+import dataBase.Encryption;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -12,7 +12,7 @@ import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
-import static DataBase.Data.*;
+import static dataBase.Data.*;
 import static java.lang.System.out;
 
 public class Authorization {

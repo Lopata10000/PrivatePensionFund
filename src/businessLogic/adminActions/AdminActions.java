@@ -1,7 +1,7 @@
-package BusinessLogic.AdminActions;
+package businessLogic.adminActions;
 
-import BusinessLogic.Authentication.Validation;
-import Intarface.Menu;
+import businessLogic.authentication.Validation;
+import intarface.Menu;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import static DataBase.Data.*;
+import static dataBase.Data.*;
 import static java.lang.System.out;
 
 public class AdminActions {
@@ -69,7 +69,7 @@ public class AdminActions {
             File oldFile = new File(userData);
             if (oldFile.delete())
                 tmp.renameTo(oldFile);
-            Menu.AdminMenu();
+            Menu.adminMenu();
         } catch (Exception ex) {
             out.println("|------------------------------------------------------------------|" + "\n" +
                     "|Дані відсутні.                                                    |" + "\n" +

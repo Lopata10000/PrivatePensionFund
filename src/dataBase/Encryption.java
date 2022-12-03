@@ -1,4 +1,4 @@
-package DataBase;
+package dataBase;
 
 import com.google.common.hash.Hashing;
 
@@ -13,7 +13,7 @@ import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
-import static DataBase.Data.*;
+import static dataBase.Data.*;
 
 public class Encryption {
     public static void EncryptionGmail() throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException, IOException, InvalidAlgorithmParameterException, ShortBufferException {
