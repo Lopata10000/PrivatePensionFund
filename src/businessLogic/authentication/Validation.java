@@ -1,7 +1,7 @@
-package BusinessLogic.Authentication;
+package businessLogic.authentication;
 
-import BusinessLogic.UserActions.ActionsWithData;
-import DataBase.Encryption;
+import businessLogic.userActions.ActionsWithData;
+import dataBase.Encryption;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -17,7 +17,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static DataBase.Data.*;
+import static dataBase.Data.*;
 import static java.lang.System.out;
 
 public class Validation {
@@ -147,7 +147,7 @@ public class Validation {
         if (Validation.isValidPassword()) {
             ActionsWithData.saveUser();
         } else {
-            Registration.Registration();
+            Registration.registration();
         }
     }
 

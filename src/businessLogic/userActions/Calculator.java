@@ -1,7 +1,7 @@
-package BusinessLogic.UserActions;
+package businessLogic.userActions;
 
-import BusinessLogic.Authentication.Validation;
-import Intarface.Menu;
+import businessLogic.authentication.Validation;
+import intarface.Menu;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -13,7 +13,7 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;
 
-import static DataBase.Data.*;
+import static dataBase.Data.*;
 import static java.lang.System.out;
 
 public class Calculator {
@@ -32,6 +32,6 @@ public class Calculator {
                 "|Ваші накопичення після виходу на пенсію через " + pensionAge + " років складатимуть:  |" + "\n" +
                 "|" + Math.round(ActionsWithData.compoundInterest(InitialСontribution)) + " грошових одиниць |" + "\n" +
                 "|------------------------------------------------------------------|");
-        Menu.ActionsWithAccounts();
+        Menu.actionsWithAccounts();
     }
 }
