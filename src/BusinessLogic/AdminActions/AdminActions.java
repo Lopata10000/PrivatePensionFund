@@ -41,7 +41,11 @@ public class AdminActions {
     public static void DeleadUser() throws IOException, InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, ShortBufferException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
         AdminActions.VeiwList();
         try {
-            Validation.lineForDelead();
+            out.println("|------------------------------------------------------------------|" + "\n" +
+                    "|Виберіть дані які ви хочете видалити                              |" + "\n" +
+                    "|------------------------------------------------------------------|");
+            setNumberForDelead(scanner.nextLine());
+//            Validation.lineForDelead();
             File tmp = File.createTempFile("tmp" , "");
 
             BufferedReader reader = new BufferedReader(new FileReader(userData));
@@ -79,7 +83,7 @@ public class AdminActions {
         List<String> fileContent = new ArrayList<>(Files.readAllLines(Path.of(userData) , StandardCharsets.UTF_8));
 
         for (int i = 0; i < fileContent.size(); i++) {
-            if (fileContent.get(i).equals((getChangeLine()))) {
+            if (fileContent.get(i).equals(getChangeLine())) {
                 fileContent.set(i , changeContent);
                 break;
             }

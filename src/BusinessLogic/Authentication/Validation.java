@@ -32,30 +32,22 @@ public class Validation {
         Matcher matcherPassword = patternPassword.matcher(getNewPassword());
         return matcherPassword.matches();
     }
-
     public static boolean isValidAge() {
-        String regex = "[0-9].{1,2}";
+        String regex = "^\\d.{1,2}$";
         Pattern patternAge = Pattern.compile(regex);
         Matcher matcherAge = patternAge.matcher(getAge());
         return matcherAge.matches();
     }
 
-    public static boolean isValidLineDelead() {
-        String regex = "[0-9].{1,3}";
-        Pattern patternLineDelead = Pattern.compile(regex);
-        Matcher matcherLineDelead = patternLineDelead.matcher(getNumberForDelead());
-        return matcherLineDelead.matches();
-    }
-
     public static boolean isValidСontributions() {
-        String regex = "[0-9].{1,15}";
+        String regex = "^\\d.{1,10}$";
         Pattern patternСontributions = Pattern.compile(regex);
         Matcher matcherСontributions = patternСontributions.matcher(getInitialСontribution());
         return matcherСontributions.matches();
     }
 
     public static boolean isValidRegularСontributions() {
-        String regex = "[0-9].{1,15}";
+        String regex = "^\\d.{1,10}$";
         Pattern patternRegularСontributions = Pattern.compile(regex);
         Matcher matcherRegularСontributions = patternRegularСontributions.matcher(getRegularСontributions());
         return matcherRegularСontributions.matches();
@@ -224,30 +216,14 @@ public class Validation {
 
     }
 
-    public static void lineForDelead() {
-        out.println("|------------------------------------------------------------------|" + "\n" +
-                "|Виберіть дані які ви хочете видалити                              |" + "\n" +
-                "|------------------------------------------------------------------|");
-        setNumberForDelead(scanner.nextLine());
-        if (!Validation.isValidLineDelead() || Integer.parseInt(getNumberForDelead()) >= getNumberLine()) {
-            out.println("|------------------------------------------------------------------|" + "\n" +
-                    "|Даних під таким номером немає.                                    |" + "\n" +
-                    "|------------------------------------------------------------------|");
-            lineForDelead();
-        }
-
-    }
-
     public static void lineForChange() {
         out.println("|---------------------------------------------------------------------|" + "\n" +
                 "|Уведіть рядок який ви хочете змінити(Повний рядок окрім номера рядка)|" + "\n" +
                 "|---------------------------------------------------------------------|");
         setChangeLine(scanner.nextLine());
-        if (Integer.parseInt(getChangeLine()) > getNumberLine()) {
-            out.println("|------------------------------------------------------------------|" + "\n" +
-                    "|Даних під таким номером немає.                                    |" + "\n" +
-                    "|------------------------------------------------------------------|");
-            lineForChange();
-        }
+        out.println("|---------------------------------------------------------------------|" + "\n" +
+                "|Уведіть дані які ви хочете змінити(Без номеру рядка)                 |" + "\n" +
+                "|---------------------------------------------------------------------|");
     }
-}
+    }
+

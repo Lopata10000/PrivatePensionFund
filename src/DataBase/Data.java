@@ -109,7 +109,7 @@ public class Data {
             out.println("|------------------------------------------------------------------|" + "\n" +
                     "|За " + i + " рік|" + "\n" +
                     "|------------------------------------------------------------------|" + "\n" +
-                    "|" + Math.round(InitialСontribution1) + "|" + "\n");
+                    "|" + Math.round(InitialСontribution1) + "|");
         }
         return InitialСontribution1;
     }

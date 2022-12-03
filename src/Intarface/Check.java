@@ -51,9 +51,5 @@ public class Check {
             }
         }
     }
-
-    public static void checkRegistration() throws IOException, InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, ShortBufferException {
-
-    }
 }
 

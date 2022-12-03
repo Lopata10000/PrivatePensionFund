@@ -27,11 +27,11 @@ public class Calculator {
         Validation.regularContributionsValidation();
         int age = Integer.parseInt(getAge());
         int pensionAge = (getRetirementAge() - age);
-        double InitialСontribution1 = Integer.parseInt(getInitialСontribution());
+        double InitialСontribution = Integer.parseInt(getInitialСontribution());
 
         out.println("|------------------------------------------------------------------|" + "\n" +
                 "|Ваші накопичення після виходу на пенсію через " + pensionAge + " років складатимуть:  |" + "\n" +
-                "|" + Math.round(Data.compoundInterest(InitialСontribution1)) + " грошових одиниць |" + "\n" +
+                "|" + Math.round(Data.compoundInterest(InitialСontribution)) + " грошових одиниць |" + "\n" +
                 "|------------------------------------------------------------------|");
         IntarfaceMenu.ActionsWithAccounts();
     }
