@@ -3,12 +3,12 @@ package DataBase;
 import java.util.Scanner;
 
 import static java.lang.System.in;
-import static java.lang.System.out;
 
 public class Data {
 
     public static Scanner scanner = new Scanner(in);
     public static final String userData = "./src/DataBase/Users.txt";
+    public static final String informationAboutUs = "./src/DataBase/InformationAboutUs.txt";
     public static String newLogin;
     public static String changeLine;
     public static int numberLine;
@@ -18,6 +18,16 @@ public class Data {
     public static String age;
     public static String initialСontribution;
     public static String regularСontributions;
+    public static String password;
+
+
+    public static String getPassword() {
+        return password;
+    }
+
+    public static void setPassword(String password) {
+        Data.password = password;
+    }
 
     public static String getChangeLine() {
         return changeLine;
@@ -99,20 +109,6 @@ public class Data {
         Data.newPassword = newPassword;
     }
 
-    public static double compoundInterest(double InitialСontribution1) {
-        int RegularСontribution = Integer.parseInt(getRegularСontributions());
-        int age = Integer.parseInt(getAge());
-        int pensionAge = (getRetirementAge() - age);
-        for (int i = 1; i < pensionAge; i++) {
-            InitialСontribution1 = InitialСontribution1 + RegularСontribution;
-            InitialСontribution1 = (InitialСontribution1 * (1.1));
-            out.println("|------------------------------------------------------------------|" + "\n" +
-                    "|За " + i + " рік|" + "\n" +
-                    "|------------------------------------------------------------------|" + "\n" +
-                    "|" + Math.round(InitialСontribution1) + "|");
-        }
-        return InitialСontribution1;
-    }
 
 }
 

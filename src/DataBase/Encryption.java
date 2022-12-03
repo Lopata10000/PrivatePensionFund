@@ -24,6 +24,7 @@ public class Encryption {
     public static void EncryptionPassword() throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException, UnsupportedEncodingException {
         String sha256hex = Hashing.sha256().hashString(getNewPassword() , StandardCharsets.UTF_8).toString();
         setNewPassword(sha256hex);
+        setPassword(getNewPassword());
     }
 
 

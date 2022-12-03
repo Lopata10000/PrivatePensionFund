@@ -1,8 +1,7 @@
-package BusinessLogic;
+package BusinessLogic.UserActions;
 
 import BusinessLogic.Authentication.Validation;
-import DataBase.Data;
-import Intarface.IntarfaceMenu;
+import Intarface.Menu;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -31,8 +30,8 @@ public class Calculator {
 
         out.println("|------------------------------------------------------------------|" + "\n" +
                 "|Ваші накопичення після виходу на пенсію через " + pensionAge + " років складатимуть:  |" + "\n" +
-                "|" + Math.round(Data.compoundInterest(InitialСontribution)) + " грошових одиниць |" + "\n" +
+                "|" + Math.round(ActionsWithData.compoundInterest(InitialСontribution)) + " грошових одиниць |" + "\n" +
                 "|------------------------------------------------------------------|");
-        IntarfaceMenu.ActionsWithAccounts();
+        Menu.ActionsWithAccounts();
     }
 }

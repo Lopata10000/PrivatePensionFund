@@ -1,14 +1,12 @@
 package BusinessLogic.Authentication;
 
+import BusinessLogic.UserActions.ActionsWithData;
 import DataBase.Encryption;
-import Intarface.IntarfaceMenu;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.ShortBufferException;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -33,21 +31,21 @@ public class Validation {
         return matcherPassword.matches();
     }
     public static boolean isValidAge() {
-        String regex = "^\\d.{1,2}$";
+        String regex = "^\\d{1,2}$";
         Pattern patternAge = Pattern.compile(regex);
         Matcher matcherAge = patternAge.matcher(getAge());
         return matcherAge.matches();
     }
 
     public static boolean isValidСontributions() {
-        String regex = "^\\d.{1,10}$";
+        String regex = "^\\d{1,10}$";
         Pattern patternСontributions = Pattern.compile(regex);
         Matcher matcherСontributions = patternСontributions.matcher(getInitialСontribution());
         return matcherСontributions.matches();
     }
 
     public static boolean isValidRegularСontributions() {
-        String regex = "^\\d.{1,10}$";
+        String regex = "^\\d{1,10}$";
         Pattern patternRegularСontributions = Pattern.compile(regex);
         Matcher matcherRegularСontributions = patternRegularСontributions.matcher(getRegularСontributions());
         return matcherRegularСontributions.matches();
@@ -86,13 +84,11 @@ public class Validation {
         }
         try {
             if (Files.lines(Paths.get(userData) , StandardCharsets.UTF_8)
-                    .anyMatch(("Логін: " + getNewLogin())::equals)) {
+                    .anyMatch(("Login: " + getNewLogin())::equals)) {
                 out.println("|------------------------------------------------------------------|" + "\n" +
                         "|Користувач з таким логіном існує.                                 |" + "\n" +
                         "|------------------------------------------------------------------|" + "\n" +
                         "|Будьте оригінальними.                                             |" + "\n" +
-                        "|------------------------------------------------------------------|" + "\n" +
-                        "|Спробуйте вибрати логін ще раз.                                   |" + "\n" +
                         "|------------------------------------------------------------------|");
                 Validation.loginValidation();
             }
@@ -116,8 +112,6 @@ public class Validation {
                     "|У паролі повинна бути присутня хоча б одна буква нижнього регістру. |" + "\n" +
                     "|--------------------------------------------------------------------|" + "\n" +
                     "|У паролі повинна бути хоча б одна цифра.                            |" + "\n" +
-                    "|--------------------------------------------------------------------|" + "\n" +
-                    "|Спробуйте вибрати пароль ще раз.                                    |" + "\n" +
                     "|--------------------------------------------------------------------|");
             Validation.passwordValidation();
         }
@@ -131,8 +125,6 @@ public class Validation {
         if (!Validation.isValidGmail()) {
             out.println("|-------------------------------------------------------------------------------|" + "\n" +
                     "|E-mail повиннен бути написаний на англійській мові і включати '@' '.' та домен.|" + "\n" +
-                    "|-------------------------------------------------------------------------------|" + "\n" +
-                    "|Спробуйте ще раз.                                                              |" + "\n" +
                     "|-------------------------------------------------------------------------------|");
             Validation.gmailValidation();
         }
@@ -142,8 +134,6 @@ public class Validation {
                     .anyMatch(("E-mail: " + getGmail())::equals)) {
                 out.println("|------------------------------------------------------------------|" + "\n" +
                         "|Користувач з таким e-mail існує.                                  |" + "\n" +
-                        "|------------------------------------------------------------------|" + "\n" +
-                        "|Спробуйте вибрати інший e-mail.                                   |" + "\n" +
                         "|------------------------------------------------------------------|");
                 Validation.gmailValidation();
             }
@@ -154,24 +144,9 @@ public class Validation {
     }
 
     public static void totalCheck() throws IOException, InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, ShortBufferException {
-        if (Validation.isValidPassword())
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(userData , true))) {
-                Encryption.EncryptionPassword();
-                writer.append("|------------------------------------------------------------------|" + "\n" +
-                        "Login: " + getNewLogin() + "\n" +
-                        "E-mail: " + getGmail() + "\n" +
-                        "Password: " + getNewPassword() + "\n");
-                writer.close();
-                out.println("|------------------------------------------------------------------|" + "\n" +
-                        "|Вас зареєстровано успішно!                                        |" + "\n" +
-                        "|------------------------------------------------------------------|");
-                if (getNewLogin().equals("FantaPetro"))
-                    IntarfaceMenu.AdminMenu();
-                else
-                    IntarfaceMenu.ActionsWithAccounts();
-                IntarfaceMenu.ActionsWithAccounts();
-            }
-        else {
+        if (Validation.isValidPassword()) {
+            ActionsWithData.saveUser();
+        } else {
             Registration.Registration();
         }
     }
@@ -184,6 +159,12 @@ public class Validation {
         if (!Validation.isValidAge()) {
             out.println("|------------------------------------------------------------------|" + "\n" +
                     "|Некоректний вік!                                                  |" + "\n" +
+                    "|------------------------------------------------------------------|");
+            ageValidation();
+        }
+        if (60 <= Integer.parseInt(getAge())) {
+            out.println("|------------------------------------------------------------------|" + "\n" +
+                    "|Ми надаємо послуги людям до 60 років. Приносимо свої вибачення.   |" + "\n" +
                     "|------------------------------------------------------------------|");
             ageValidation();
         }
@@ -216,7 +197,7 @@ public class Validation {
 
     }
 
-    public static void lineForChange() {
+    public static void lineForChangeValidation() {
         out.println("|---------------------------------------------------------------------|" + "\n" +
                 "|Уведіть рядок який ви хочете змінити(Повний рядок окрім номера рядка)|" + "\n" +
                 "|---------------------------------------------------------------------|");
