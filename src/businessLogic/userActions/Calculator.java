@@ -22,7 +22,7 @@ public class Calculator {
         int age = Integer.parseInt(getAge());
         int pensionAge = (getRetirementAge() - age);
         double initialСontribution = Integer.parseInt(getInitialСontribution());
-
+        Menu.clearConsole();
         out.println("|------------------------------------------------------------------|" + "\n" +
                 "|Ваші накопичення після виходу на пенсію через " + pensionAge + " років складатимуть:  |" + "\n" +
                 "|" + Math.round(Calculation.compoundInterest(initialСontribution)) + " грошових одиниць |" + "\n" +

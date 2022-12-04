@@ -9,8 +9,8 @@ import static java.lang.System.in;
 public class Data {
 
     public static final Scanner scanner = new Scanner(in);
-    public static final String userData = "./src/DataBase/Users.txt";
-    protected static final String informationAboutUs = "./src/DataBase/InformationAboutUs.txt";
+    public static final String userData = "Users.txt";
+    protected static final String informationAboutUs = "InformationAboutUs.txt";
     public static String newLogin;
     public static String changeLine;
     public static int numberLine = 0;

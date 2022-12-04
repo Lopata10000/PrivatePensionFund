@@ -2,6 +2,7 @@ package businessLogic.authentication;
 
 import businessLogic.userActions.ActionsWithData;
 import dataBase.Data;
+import intarface.Menu;
 
 import static dataBase.Data.*;
 import static intarface.Menu.dividingLine;
@@ -9,6 +10,7 @@ import static java.lang.System.out;
 
 public class Authorization extends Check {
     public static void authorization() {
+        Menu.clearConsole();
         out.println(dividingLine + "\n" +
                 "|Ваш логін:                                                        |" + "\n" +
                 dividingLine);

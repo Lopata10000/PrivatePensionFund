@@ -19,18 +19,23 @@ import static java.lang.System.out;
 
 public class Registration extends Check {
     public static void registration() throws IOException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, InvalidAlgorithmParameterException, ShortBufferException {
+        Menu.clearConsole();
         Validation.loginValidation();
         Validation.gmailValidation();
         Validation.passwordValidation();
         Validation.totalCheck();
-        Check.inputData();
         Registration.Save.saveUser();
     }
 
     public static class Save {
         public static void saveUser() throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, IOException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, ShortBufferException {
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(userData , true))) {
-                writer.append(dividingLine + "\n" + "Login: ").append(getNewLogin()).append("\n").append("E-mail: ").append(getGmail()).append("\n").append(password).append(getNewPassword()).append("\n");
+                Check.inputData();
+                writer.append("|------------------------------------------------------------------|" + "\n" +
+                        "Login: " + getNewLogin() + "\n" +
+                        "E-mail: " + getGmail() + "\n" +
+                        "Password: " + getNewPassword() + "\n");
+                writer.close();
                 out.println(dividingLine + "\n" +
                         "|Вас зареєстровано успішно!                                        |" + "\n" +
                         dividingLine);
@@ -38,7 +43,6 @@ public class Registration extends Check {
                     Menu.adminMenu();
                 else
                     Menu.actionsWithAccounts();
-                Menu.actionsWithAccounts();
             }
         }
     }

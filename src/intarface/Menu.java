@@ -28,6 +28,7 @@ public class Menu implements getLine {
     public static final String uKnowActions = "Незрозуміла опція";
 
     public static void mainMenu() throws IOException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, InvalidAlgorithmParameterException, ShortBufferException {
+        clearConsole();
         out.println("""
 
                 |--======================================================================-- Пенсійний фонд ''Чахлики'' --========================================================================--|
@@ -66,7 +67,6 @@ public class Menu implements getLine {
                                                                                          ████████████████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
                 """);
         command = scanner.nextLine();
-
         switch (command) {
             case "1" -> authorization();
             case "2" -> registration();
@@ -81,6 +81,7 @@ public class Menu implements getLine {
     }
 
     public static void actionsWithAccounts() throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, IOException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, ShortBufferException {
+        clearConsole();
         out.println("|------------------------------------------------------------------|" + "\n" +
                 "| Ви увійшли як: " + getNewLogin() + "|" + "\n" +
                 dividingLine + "\n" +
@@ -111,6 +112,7 @@ public class Menu implements getLine {
 
     @SuppressFBWarnings("SF_SWITCH_FALLTHROUGH")
     public static void adminMenu() throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, IOException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, ShortBufferException {
+        clearConsole();
         out.printf("| Ви ввійшли як: " + getNewLogin() + "|" + "\n" +
                 dividingLine + "\n" +
                 "|Що ви бажаєте зробити? |" + "\n" +
@@ -140,15 +142,6 @@ public class Menu implements getLine {
                 out.println(uKnowActions);
                 Menu.mainMenu();
             }
-        }
-    }
-
-    public static void backtoMainMenu() throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, ShortBufferException, IOException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
-        byte command;
-        command = (scanner.nextByte());
-
-        if (command == 27) {
-            Menu.mainMenu();
         }
     }
 

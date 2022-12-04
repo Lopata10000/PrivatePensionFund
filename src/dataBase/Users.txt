@@ -8,3 +8,11 @@ Deposit: 131231231 Time: Sun Dec 04 01:29:57 EET 2022
 Login: FantaPetro1
 E-mail: b34d026d2cdf8226b05999230d70e62f1b5e3519bab0bf78085a3b3b7d043ed1
 Password: 4f43bff94b599a80c1a9f8160c42fd5eec0b42e99c2263a847d8045b471a1af6
+|------------------------------------------------------------------|
+Login: FantaPetro12
+E-mail: 7f8927032b7184e1c2c89b84b61f4cb08e2faec76273ae04972ae2ff86308df7
+Password: FantaPetro12!
+|------------------------------------------------------------------|
+Login: FantaFnat12
+E-mail: 90fce9d8aa9adbf8a131cc9aee2fed087ef69123958faa5e63c5dd012d869638
+Password: 4f43bff94b599a80c1a9f8160c42fd5eec0b42e99c2263a847d8045b471a1af6
