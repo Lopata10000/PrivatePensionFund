@@ -1,6 +1,9 @@
 package businessLogic.adminActions;
 
 import businessLogic.authentication.Validation;
+import businessLogic.userActions.getLine;
+import dataBase.Data;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import intarface.Menu;
 
 import javax.crypto.BadPaddingException;
@@ -19,11 +22,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import static dataBase.Data.*;
 import static java.lang.System.out;
 
-public class AdminActions {
-    public static void VeiwList() throws IOException, InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, ShortBufferException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
+@SuppressWarnings("ALL")
+public class AdminActions extends Data implements getLine {
+    @SuppressFBWarnings("NM_METHOD_NAMING_CONVENTION")
+    public static void veiwList() throws IOException, InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, ShortBufferException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
         int line = 1;
         try (var reader = new BufferedReader(new FileReader(userData))) {
             while (reader.readLine() != null) {
@@ -33,21 +37,22 @@ public class AdminActions {
             Scanner numberedFile = new Scanner(Paths.get(userData) , StandardCharsets.UTF_8);
             while (numberedFile.hasNext()) {
                 for (int i = 1; i < getNumberLine(); i++)
-                    System.out.println("[Line Number: " + i + "] " + numberedFile.nextLine());
+                    out.println("[Line Number: " + i + "] " + numberedFile.nextLine());
             }
-        } catch (Exception ex) {
+        } catch (IOException ex) {
             out.println("Немає даних");
             Menu.mainMenu();
         }
 
     }
 
-    public static void DeleadUser() throws IOException, InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, ShortBufferException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
-        AdminActions.VeiwList();
+    @SuppressFBWarnings("REC_CATCH_EXCEPTION")
+    public static void deleadUser() throws IOException, InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, ShortBufferException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
+        veiwList();
         try {
-            out.println("|------------------------------------------------------------------|" + "\n" +
+            out.println(dividingLine + "\n" +
                     "|Виберіть дані які ви хочете видалити                              |" + "\n" +
-                    "|------------------------------------------------------------------|");
+                    dividingLine);
             setNumberForDelead(scanner.nextLine());
             File tmp = File.createTempFile("tmp" , "");
 
@@ -65,21 +70,20 @@ public class AdminActions {
 
             reader.close();
             writer.close();
-
             File oldFile = new File(userData);
             if (oldFile.delete())
                 tmp.renameTo(oldFile);
             Menu.adminMenu();
         } catch (Exception ex) {
-            out.println("|------------------------------------------------------------------|" + "\n" +
+            out.println(dividingLine + "\n" +
                     "|Дані відсутні.                                                    |" + "\n" +
-                    "|------------------------------------------------------------------|");
+                    dividingLine);
             Menu.mainMenu();
         }
     }
 
-    public static void Rewu() throws IOException, InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, ShortBufferException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
-        VeiwList();
+    public static void rewu() throws IOException, InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, ShortBufferException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
+        veiwList();
         Validation.lineForChangeValidation();
         String changeContent = scanner.nextLine();
 

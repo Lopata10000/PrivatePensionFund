@@ -1,10 +1,7 @@
 package intarface;
 
-import businessLogic.adminActions.AdminActions;
-import businessLogic.authentication.Authorization;
-import businessLogic.authentication.Registration;
-import businessLogic.userActions.ActionsWithData;
-import businessLogic.userActions.Calculator;
+import businessLogic.userActions.getLine;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -16,13 +13,19 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;
 
+import static businessLogic.adminActions.AdminActions.*;
+import static businessLogic.authentication.Authorization.authorization;
+import static businessLogic.authentication.Registration.registration;
+import static businessLogic.userActions.ActionsWithData.*;
+import static businessLogic.userActions.Calculator.Calculations;
 import static dataBase.Data.getNewLogin;
 import static java.lang.System.out;
 
-public class Menu {
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("DM_DEFAULT_ENCODING")
-    static Scanner scanner = new Scanner(System.in);
+public class Menu implements getLine {
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings({"DM_DEFAULT_ENCODING" , "DM_DEFAULT_ENCODING"})
+    public static final Scanner scanner = new Scanner(System.in);
     static String command;
+    public static final String uKnowActions = "Незрозуміла опція";
 
     public static void mainMenu() throws IOException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, InvalidAlgorithmParameterException, ShortBufferException {
         out.println("""
@@ -38,7 +41,7 @@ public class Menu {
                 |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~4:     Про нас     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
                 |------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
                 |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~5:      Вихід      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
-                |------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|                                                                        
+                |------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040
                                                                                          ▒▒▒▒▒▒▒▒▒▒▒▄▄▄▄░▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
                                                                                          ▒▒▒▒▒▒▒▒▒▄██████▒▒▒▒▒▄▄▄█▄▒▒▒▒▒▒▒▒▒▒
                                                                                          ▒▒▒▒▒▒▒▄██▀░░▀██▄▒▒▒▒████████▄▒▒▒▒▒▒
@@ -65,13 +68,13 @@ public class Menu {
         command = scanner.nextLine();
 
         switch (command) {
-            case "1" -> Authorization.Authorization();
-            case "2" -> Registration.registration();
-            case "3" -> Calculator.Calculations();
-            case "4" -> ActionsWithData.informationAboutUs();
+            case "1" -> authorization();
+            case "2" -> registration();
+            case "3" -> Calculations();
+            case "4" -> informationAboutUs();
             case "5" -> System.exit(0);
             default -> {
-                out.println("Непоняль");
+                out.println(uKnowActions);
                 Menu.mainMenu();
             }
         }
@@ -80,86 +83,63 @@ public class Menu {
     public static void actionsWithAccounts() throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, IOException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, ShortBufferException {
         out.println("|------------------------------------------------------------------|" + "\n" +
                 "| Ви увійшли як: " + getNewLogin() + "|" + "\n" +
-                "|------------------------------------------------------------------|" + "\n" +
-                "|------------------------------------------------------------------|" + "\n" +
+                dividingLine + "\n" +
+                dividingLine + "\n" +
                 "|Що ви бажаєте зробити?                                            |" + "\n" +
-                "|------------------------------------------------------------------|" + "\n" +
+                dividingLine + "\n" +
                 "|1: Створити вклад.                                                |" + "\n" +
-                "|------------------------------------------------------------------|" + "\n" +
+                dividingLine + "\n" +
                 "|2: Переглянути вклад.                                             |" + "\n" +
-                "|------------------------------------------------------------------|" + "\n" +
+                dividingLine + "\n" +
                 "|3: Вирахувати пенсійні накопичення.                               |" + "\n" +
-                "|------------------------------------------------------------------|" + "\n" +
+                dividingLine + "\n" +
                 "|4: Вийти.                                                         |" + "\n" +
-                "|------------------------------------------------------------------|" + "\n");
+                dividingLine + "\n");
         command = scanner.nextLine();
 
         switch (command) {
-
-            case "1":
-                ActionsWithData.addDeposit();
-                break;
-            case "2":
-                ActionsWithData.viewDeposit();
-                break;
-            case "4":
-                Calculator.Calculations();
-                break;
-            case "5":
+            case "1" -> addDeposit();
+            case "2" -> viewDeposit();
+            case "3" -> Calculations();
+            case "4" -> Menu.mainMenu();
+            default -> {
+                out.println(uKnowActions);
                 Menu.mainMenu();
-                break;
-
-
-            default:
-                out.println("Непоняль");
-                Menu.mainMenu();
+            }
         }
     }
 
+    @SuppressFBWarnings("SF_SWITCH_FALLTHROUGH")
     public static void adminMenu() throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, IOException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, ShortBufferException {
-        out.println("|------------------------------------------------------------------|" + "\n" +
-                "| Ви увійшли як: " + getNewLogin() + "|" + "\n" +
-                "|------------------------------------------------------------------|" + "\n" +
-                "|Що ви бажаєте зробити?                                            |" + "\n" +
-                "|------------------------------------------------------------------|" + "\n" +
-                "|1: Переглянути користувачів.                                      |" + "\n" +
-                "|------------------------------------------------------------------|" + "\n" +
-                "|2: Видалити дані.                                                 |" + "\n" +
-                "|------------------------------------------------------------------|" + "\n" +
-                "|3: Відредагувати дані.                                            |" + "\n" +
-                "|------------------------------------------------------------------|" + "\n" +
-                "|4: Добавити користувача.                                          |" + "\n" +
-                "|------------------------------------------------------------------|" + "\n" +
-                "|5: Змінити дані про фонд.                                         |" + "\n" +
-                "|------------------------------------------------------------------|" + "\n" +
-                "|6: Вийти.                                                         |" + "\n" +
-                "|------------------------------------------------------------------|");
+        out.printf("| Ви ввійшли як: " + getNewLogin() + "|" + "\n" +
+                dividingLine + "\n" +
+                "|Що ви бажаєте зробити? |" + "\n" +
+                dividingLine + "\n" +
+                "|1: Переглянути користувачів. |" + "\n" +
+                dividingLine + "\n" +
+                "|2: Видалити дані. |" + "\n" +
+                dividingLine + "\n" +
+                "|3: Відредагувати дані. |" + "\n" +
+                dividingLine + "\n" +
+                "|4: Додати користувача. |" + "\n" +
+                dividingLine + "\n" +
+                "|5: Змінити дані про фонд. |" + "\n" +
+                dividingLine + "\n" +
+                "|6: Вийти |" + "\n" +
+                dividingLine);
         command = scanner.nextLine();
 
         switch (command) {
-
-            case "1":
-                AdminActions.VeiwList();
-                break;
-            case "2":
-                AdminActions.DeleadUser();
-                break;
-            case "3":
-                AdminActions.Rewu();
-                break;
-            case "4":
-                Registration.registration();
-                break;
-            case "5":
-                ActionsWithData.changeInformationAboutUs();
-            case "6":
+            case "1" -> veiwList();
+            case "2" -> deleadUser();
+            case "3" -> rewu();
+            case "4" -> registration();
+            case "5" -> changeInformationAboutUs();
+            case "6" -> mainMenu();
+            default -> {
+                out.println(uKnowActions);
                 Menu.mainMenu();
-                break;
-
-
-            default:
-                out.println("Непоняль");
-                Menu.mainMenu();
+            }
         }
     }
 
@@ -172,7 +152,7 @@ public class Menu {
         }
     }
 
-    public final static void clearConsole() {
+    public static void clearConsole() {
         try {
             final String os = System.getProperty("os.name");
 
