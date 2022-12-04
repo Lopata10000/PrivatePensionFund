@@ -1,7 +1,7 @@
 package businessLogic.authentication;
 
-import businessLogic.userActions.ActionsWithData;
-import dataBase.Encryption;
+import businessLogic.userActions.getLine;
+import dataBase.Data;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -17,12 +17,12 @@ import java.security.NoSuchAlgorithmException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static dataBase.Data.*;
 import static java.lang.System.out;
 
-public class Validation {
-    public static boolean isValidPassword() {
-        String regex = "^(?=.*[0-9])"
+@SuppressWarnings("ALL")
+public class Validation extends Data implements getLine {
+    private static boolean isValidPassword() {
+        String regex = "^(?=.*\\d)"
                 + "(?=.*[a-z])(?=.*[A-Z])"
                 + "(?=.*[!@#&()–[{}]:;',?/*~$^+=<>])"
                 + "(?=\\S+$).{8,30}$";
@@ -30,28 +30,29 @@ public class Validation {
         Matcher matcherPassword = patternPassword.matcher(getNewPassword());
         return matcherPassword.matches();
     }
-    public static boolean isValidAge() {
+
+    private static boolean isValidAge() {
         String regex = "^\\d{1,2}$";
         Pattern patternAge = Pattern.compile(regex);
         Matcher matcherAge = patternAge.matcher(getAge());
         return matcherAge.matches();
     }
 
-    public static boolean isValidСontributions() {
+    private static boolean isValidContribution() {
         String regex = "^\\d{1,10}$";
-        Pattern patternСontributions = Pattern.compile(regex);
-        Matcher matcherСontributions = patternСontributions.matcher(getInitialСontribution());
-        return matcherСontributions.matches();
+        Pattern patternContribution = Pattern.compile(regex);
+        Matcher matcherContribution = patternContribution.matcher(Data.getInitialСontribution());
+        return matcherContribution.matches();
     }
 
-    public static boolean isValidRegularСontributions() {
+    private static boolean isValidRegularContribution() {
         String regex = "^\\d{1,10}$";
-        Pattern patternRegularСontributions = Pattern.compile(regex);
-        Matcher matcherRegularСontributions = patternRegularСontributions.matcher(getRegularСontributions());
-        return matcherRegularСontributions.matches();
+        Pattern patternRegularСontribution = Pattern.compile(regex);
+        Matcher matcherRegularContribution = patternRegularСontribution.matcher(getRegularСontributions());
+        return matcherRegularContribution.matches();
     }
 
-    public static boolean isValidGmail() {
+    private static boolean isValidGmail() {
         String regex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}";
         //Compile regular expression to get the pattern
         Pattern patternGmail = Pattern.compile(regex);
@@ -67,29 +68,30 @@ public class Validation {
         return matcherLogin.matches();
     }
 
-    public static void loginValidation() throws IOException, InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, ShortBufferException {
-        out.println("|------------------------------------------------------------------|" + "\n" +
+    public static void loginValidation() {
+        out.println(dividingLine + "\n" +
                 "|Ваш логін:                                                        |" + "\n" +
-                "|------------------------------------------------------------------|");
+                dividingLine);
         setNewLogin(scanner.nextLine());
         if (!Validation.isValidLogin()) {
-            out.println("|------------------------------------------------------------------|" + "\n" +
+            out.println(dividingLine + "\n" +
                     "|Довжина логіна повинна бути менше 30 і більше 8 символів.         |" + "\n" +
-                    "|------------------------------------------------------------------|" + "\n" +
+                    dividingLine + "\n" +
                     "|Логін повинен складатися із букв верхнього і нижнього регістру.   |" + "\n" +
-                    "|------------------------------------------------------------------|" + "\n" +
+                    dividingLine + "\n" +
                     "|Спробуйте вибрати логін ще раз.                                   |" + "\n" +
-                    "|------------------------------------------------------------------|");
+                    dividingLine);
             Validation.loginValidation();
         }
         try {
+            //noinspection resource
             if (Files.lines(Paths.get(userData) , StandardCharsets.UTF_8)
                     .anyMatch(("Login: " + getNewLogin())::equals)) {
-                out.println("|------------------------------------------------------------------|" + "\n" +
+                out.println(dividingLine + "\n" +
                         "|Користувач з таким логіном існує.                                 |" + "\n" +
-                        "|------------------------------------------------------------------|" + "\n" +
+                        dividingLine + "\n" +
                         "|Будьте оригінальними.                                             |" + "\n" +
-                        "|------------------------------------------------------------------|");
+                        dividingLine);
                 Validation.loginValidation();
             }
         } catch (Exception ex) {
@@ -98,43 +100,43 @@ public class Validation {
         }
     }
 
-    public static void passwordValidation() throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, IOException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, ShortBufferException {
-        out.println("|------------------------------------------------------------------|" + "\n" +
+    public static void passwordValidation() {
+        out.println(dividingLine + "\n" +
                 "|Ваш пароль:                                                       |" + "\n" +
-                "|------------------------------------------------------------------|");
+                dividingLine);
         setNewPassword(scanner.nextLine());
         if (!Validation.isValidPassword()) {
-            out.println("|--------------------------------------------------------------------|" + "\n" +
+            out.println(dividingLine + "\n" +
                     "|Довжина пароля повинна бути менше 30 і більше 8 символів.           |" + "\n" +
-                    "|--------------------------------------------------------------------|" + "\n" +
+                    dividingLine + "\n" +
                     "|У паролі повинна бути присутня хоча б одна буква верхнього регістру.|" + "\n" +
-                    "|--------------------------------------------------------------------|" + "\n" +
+                    dividingLine + "\n" +
                     "|У паролі повинна бути присутня хоча б одна буква нижнього регістру. |" + "\n" +
-                    "|--------------------------------------------------------------------|" + "\n" +
+                    dividingLine + "\n" +
                     "|У паролі повинна бути хоча б одна цифра.                            |" + "\n" +
-                    "|--------------------------------------------------------------------|");
+                    dividingLine);
             Validation.passwordValidation();
         }
     }
 
-    public static void gmailValidation() throws IOException, InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, ShortBufferException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
-        out.println("|------------------------------------------------------------------|" + "\n" +
+    public static void gmailValidation() {
+        out.println(dividingLine + "\n" +
                 "|Ваш e-mail:                                                       |" + "\n" +
-                "|------------------------------------------------------------------|");
+                dividingLine);
         setGmail(scanner.nextLine());
         if (!Validation.isValidGmail()) {
-            out.println("|-------------------------------------------------------------------------------|" + "\n" +
+            out.println(dividingLine + "\n" +
                     "|E-mail повиннен бути написаний на англійській мові і включати '@' '.' та домен.|" + "\n" +
-                    "|-------------------------------------------------------------------------------|");
+                    dividingLine);
             Validation.gmailValidation();
         }
         try {
-            Encryption.EncryptionGmail();
+            Data.Encryption.encryptionGmail();
             if (Files.lines(Paths.get(userData) , StandardCharsets.UTF_8)
                     .anyMatch(("E-mail: " + getGmail())::equals)) {
-                out.println("|------------------------------------------------------------------|" + "\n" +
+                out.println(dividingLine + "\n" +
                         "|Користувач з таким e-mail існує.                                  |" + "\n" +
-                        "|------------------------------------------------------------------|");
+                        dividingLine);
                 Validation.gmailValidation();
             }
         } catch (Exception ex) {
@@ -145,66 +147,67 @@ public class Validation {
 
     public static void totalCheck() throws IOException, InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, ShortBufferException {
         if (Validation.isValidPassword()) {
-            ActionsWithData.saveUser();
+            Registration.Save.saveUser();
         } else {
             Registration.registration();
         }
     }
 
     public static void ageValidation() {
-        out.println("|------------------------------------------------------------------|" + "\n" +
+        out.println(dividingLine + "\n" +
                 "|Уведіть свій вік:                                                 |" + "\n" +
-                "|------------------------------------------------------------------|");
+                dividingLine);
         setAge(scanner.nextLine());
         if (!Validation.isValidAge()) {
-            out.println("|------------------------------------------------------------------|" + "\n" +
+            out.println(dividingLine + "\n" +
                     "|Некоректний вік!                                                  |" + "\n" +
-                    "|------------------------------------------------------------------|");
+                    dividingLine);
             ageValidation();
         }
         if (60 <= Integer.parseInt(getAge())) {
-            out.println("|------------------------------------------------------------------|" + "\n" +
+            out.println(dividingLine + "\n" +
                     "|Ми надаємо послуги людям до 60 років. Приносимо свої вибачення.   |" + "\n" +
-                    "|------------------------------------------------------------------|");
+                    dividingLine);
             ageValidation();
         }
     }
 
     public static void contributionsValidation() {
-        out.println("|------------------------------------------------------------------|" + "\n" +
+        out.println(dividingLine + "\n" +
                 "|Уведіть свій перший вклад.                                        |" + "\n" +
-                "|------------------------------------------------------------------|");
-        setInitialСontribution(scanner.nextLine());
-        if (!Validation.isValidСontributions()) {
-            out.println("|------------------------------------------------------------------|" + "\n" +
+                dividingLine);
+        Data.setInitialСontribution(scanner.nextLine());
+        if (!Validation.isValidContribution()) {
+            out.println(dividingLine + "\n" +
                     "|Уведено некректні дані (до 20 символі, тільки цифри!)             |" + "\n" +
-                    "|------------------------------------------------------------------|");
+                    dividingLine);
             contributionsValidation();
         }
     }
 
+    @SuppressWarnings("NonAsciiCharacters")
     public static void regularContributionsValidation() {
-        out.println("|------------------------------------------------------------------|" + "\n" +
+        out.println(dividingLine + "\n" +
                 "|Скільки ви готові відкладати кожного року?                        |" + "\n" +
-                "|------------------------------------------------------------------|");
+                dividingLine);
         setRegularСontributions(scanner.nextLine());
-        if (!Validation.isValidRegularСontributions()) {
-            out.println("|------------------------------------------------------------------|" + "\n" +
+        if (!Validation.isValidRegularContribution()) {
+            out.println(dividingLine + "\n" +
                     "|Уведено некректні дані (до 20 символі, тільки цифри!)             |" + "\n" +
-                    "|------------------------------------------------------------------|");
+                    dividingLine);
             regularContributionsValidation();
         }
 
     }
 
     public static void lineForChangeValidation() {
-        out.println("|---------------------------------------------------------------------|" + "\n" +
+        out.println(dividingLine + "\n" +
                 "|Уведіть рядок який ви хочете змінити(Повний рядок окрім номера рядка)|" + "\n" +
-                "|---------------------------------------------------------------------|");
+                dividingLine);
         setChangeLine(scanner.nextLine());
-        out.println("|---------------------------------------------------------------------|" + "\n" +
+        out.println(dividingLine + "\n" +
                 "|Уведіть дані які ви хочете змінити(Без номеру рядка)                 |" + "\n" +
-                "|---------------------------------------------------------------------|");
+                dividingLine);
     }
     }
 

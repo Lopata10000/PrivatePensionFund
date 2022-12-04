@@ -3,4 +3,8 @@ Login: FantaFanta
 E-mail: cd162128c8f0848570ee6bd6bb3a934da747b30d1795fe81283b51480cb4a69b
 Password: 4f43bff94b599a80c1a9f8160c42fd5eec0b42e99c2263a847d8045b471a1af6
 Age: 12
-Deposit: 12 Time: Sun Dec 04 00:00:09 EET 2022
+Deposit: 131231231 Time: Sun Dec 04 01:29:57 EET 2022
+|-------------------------------------------------------------------|
+Login: FantaPetro1
+E-mail: b34d026d2cdf8226b05999230d70e62f1b5e3519bab0bf78085a3b3b7d043ed1
+Password: 4f43bff94b599a80c1a9f8160c42fd5eec0b42e99c2263a847d8045b471a1af6

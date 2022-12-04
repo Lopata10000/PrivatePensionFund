@@ -1,36 +1,30 @@
 package businessLogic.authentication;
 
 import businessLogic.userActions.ActionsWithData;
-import dataBase.Encryption;
-
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-import javax.crypto.ShortBufferException;
-import java.io.IOException;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
+import dataBase.Data;
 
 import static dataBase.Data.*;
+import static intarface.Menu.dividingLine;
 import static java.lang.System.out;
 
-public class Authorization {
-    public static void Authorization() throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, IOException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, ShortBufferException {
-        out.println("|------------------------------------------------------------------|" + "\n" +
+public class Authorization extends Check {
+    public static void authorization() {
+        out.println(dividingLine + "\n" +
                 "|Ваш логін:                                                        |" + "\n" +
-                "|------------------------------------------------------------------|");
+                dividingLine);
         setNewLogin(scanner.nextLine());
-        out.println("|------------------------------------------------------------------|" + "\n" +
-                "|Ваш e-mail:                                                       |" + "\n" +
-                "|------------------------------------------------------------------|");
+        out.println(dividingLine + "\n" +
+                "|E-mail:                                                           |" + "\n" +
+                dividingLine);
         setGmail(scanner.nextLine());
-        out.println("|------------------------------------------------------------------|" + "\n" +
+        out.println(dividingLine + "\n" +
                 "|Ваш пароль(English):                                              |" + "\n" +
-                "|------------------------------------------------------------------|");
+                dividingLine);
         setNewPassword(scanner.nextLine());
-        Encryption.EncryptionPassword();
-        Encryption.EncryptionGmail();
+        Check.inputData();
+        Data.Encryption.encryptionGmail();
         ActionsWithData.checkAuthorization();
+
+
     }
 }

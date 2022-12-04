@@ -2,7 +2,7 @@ package businessLogic.userActions;
 
 import businessLogic.authentication.Authorization;
 import businessLogic.authentication.Validation;
-import dataBase.Encryption;
+import dataBase.Data;
 import intarface.Menu;
 
 import javax.crypto.BadPaddingException;
@@ -25,74 +25,66 @@ import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
-import static dataBase.Data.*;
 import static java.lang.System.out;
+import static java.nio.file.Files.lines;
 
-public class ActionsWithData {
-    public static void checkAuthorization() throws IOException, InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, ShortBufferException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
-        try (
-                FileReader reader = new FileReader(userData)) {
-            if (Files.lines(Paths.get(userData) , StandardCharsets.UTF_8).anyMatch(("Login: " + getNewLogin())::equals)
-                    && Files.lines(Paths.get(userData) , StandardCharsets.UTF_8).anyMatch(("Password: " + getNewPassword())::equals)
-                    && Files.lines(Paths.get(userData) , StandardCharsets.UTF_8).anyMatch(("E-mail: " + getGmail())::equals)) {
-                if (getNewLogin().equals("FantaPetro"))
-                    Menu.adminMenu();
-                else
-                    Menu.actionsWithAccounts();
-            } else {
-                out.println("|------------------------------------------------------------------|" + "\n" +
+@SuppressWarnings({"resource" , "NonAsciiCharacters"})
+public class ActionsWithData extends Data implements getLine {
+    private static final String password = "Password: ";
+
+    public static void checkAuthorization() {
+        try {
+            Path path = Paths.get(userData);
+            if (lines(path , StandardCharsets.UTF_8).noneMatch(("Login: " + getNewLogin())::equals)) {
+                out.println(dividingLine + "\n" +
                         "|Такого акаунту немає.                                             |" + "\n" +
-                        "|------------------------------------------------------------------|");
-                Authorization.Authorization();
+                        dividingLine);
+                Authorization.authorization();
+            } else {
+                if (lines(path , StandardCharsets.UTF_8).noneMatch((password + getNewPassword())::equals) || lines(path , StandardCharsets.UTF_8).noneMatch(("E-mail: " + getGmail())::equals)) {
+                    out.println(dividingLine + "\n" +
+                            "|Такого акаунту немає.                                             |" + "\n" +
+                            dividingLine);
+                    Authorization.authorization();
+                } else {
+                    if (getNewLogin().equals("FantaPetro"))
+                        Menu.adminMenu();
+                    else
+                        Menu.actionsWithAccounts();
+                }
             }
+        } catch (Exception ex) {
+            out.println("Немає даних");
         }
     }
-
-    public static void saveUser() throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, IOException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, ShortBufferException {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(userData , true))) {
-            Encryption.EncryptionPassword();
-            writer.append("|------------------------------------------------------------------|" + "\n" +
-                    "Login: " + getNewLogin() + "\n" +
-                    "E-mail: " + getGmail() + "\n" +
-                    "Password: " + getNewPassword() + "\n");
-            out.println("|------------------------------------------------------------------|" + "\n" +
-                    "|Вас зареєстровано успішно!                                        |" + "\n" +
-                    "|------------------------------------------------------------------|");
-            if (getNewLogin().equals("FantaPetro"))
-                Menu.adminMenu();
-            else
-                Menu.actionsWithAccounts();
-            Menu.actionsWithAccounts();
-        }
-    }
-
     public static void addDeposit() throws IOException, InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, ShortBufferException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
         Validation.contributionsValidation();
         Validation.ageValidation();
         Date date = new Date();
-        List<String> fileContent = new ArrayList<>(Files.readAllLines(Path.of(userData) , StandardCharsets.UTF_8));
+        Path of = Path.of(userData);
+        List<String> fileContent = new ArrayList<>(Files.readAllLines(of , StandardCharsets.UTF_8));
 
         for (int i = 0; i < fileContent.size(); i++) {
-            if (fileContent.get(i).equals("Password: " + getPassword())) {
-                fileContent.set(i , "Password: " + getPassword() + "\n" + "Age: " + getAge() + "\n" + "Deposit: " + getInitialСontribution() + " Time: " + date);
+            if (fileContent.get(i).equals(password + getPassword())) {
+                fileContent.set(i , password + getPassword() + "\n" + "Age: " + getAge() + "\n" + "Deposit: " + getInitialСontribution() + " Time: " + date);
                 break;
             }
         }
-        Files.write(Path.of(userData) , fileContent , StandardCharsets.UTF_8);
+        Files.write(of , fileContent , StandardCharsets.UTF_8);
         Menu.actionsWithAccounts();
     }
 
     public static void changeInformationAboutUs() throws IOException, InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, ShortBufferException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
-        out.println("|------------------------------------------------------------------|" + "\n" +
+        out.println(dividingLine + "\n" +
                 "|Нова інформація:                                                  |" + "\n" +
-                "|------------------------------------------------------------------|");
+                dividingLine);
         String newInformationAboutUs = scanner.nextLine();
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(informationAboutUs , false))) {
-            writer.write("|------------------------------------------------------------------|" + "\n" +
+            writer.write(dividingLine + "\n" +
                     newInformationAboutUs);
-            out.println("|------------------------------------------------------------------|" + "\n" +
+            out.println(dividingLine + "\n" +
                     "|Дані змінено успішно!                                             |" + "\n" +
-                    "|------------------------------------------------------------------|");
+                    dividingLine);
             Menu.adminMenu();
         }
     }
@@ -116,29 +108,16 @@ public class ActionsWithData {
         }
     }
 
-    public static void viewDeposit() throws IOException {
+    public static void viewDeposit() throws IOException, InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, ShortBufferException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
         List<String> fileContent = new ArrayList<>(Files.readAllLines(Path.of(userData) , StandardCharsets.UTF_8));
         int number = 2;
         for (int i = 0; i < fileContent.size(); i++) {
-            if (fileContent.get(i).equals("Password: " + getNewPassword())) {
+            if (fileContent.get(i).equals(password + getNewPassword())) {
                 number += i;
+                out.println(fileContent.get(i + 2));
+                break;
             }
         }
-        out.println(fileContent.get(number + 1));
-    }
-
-    public static double compoundInterest(double initialcontribution) {
-        int regularcontribution = Integer.parseInt(getRegularСontributions());
-        int age = Integer.parseInt(getAge());
-        int pensionAge = (getRetirementAge() - age);
-        for (int i = 1; i < pensionAge; i++) {
-            initialcontribution = initialcontribution + regularcontribution;
-            initialcontribution = (initialcontribution * (1.1));
-            out.println("|------------------------------------------------------------------|" + "\n" +
-                    "|За " + i + " рік|" + "\n" +
-                    "|------------------------------------------------------------------|" + "\n" +
-                    "|" + Math.round(initialcontribution) + "|");
-        }
-        return initialcontribution;
+        Menu.actionsWithAccounts();
     }
 }
