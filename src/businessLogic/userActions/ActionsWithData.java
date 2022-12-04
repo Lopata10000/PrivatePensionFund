@@ -1,6 +1,5 @@
 package businessLogic.userActions;
 
-import businessLogic.authentication.Authorization;
 import businessLogic.authentication.Validation;
 import dataBase.Data;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -34,6 +33,7 @@ public class ActionsWithData extends Data implements getLine {
     private static final String password = "Password: ";
 
     @SuppressFBWarnings("REC_CATCH_EXCEPTION")
+    //перевірка даних для авторизації
     public static void checkAuthorization() {
         try {
             Path path = Paths.get(userData);
@@ -41,7 +41,7 @@ public class ActionsWithData extends Data implements getLine {
                 out.println(dividingLine + "\n" +
                         "|Такого акаунту немає.                                             |" + "\n" +
                         dividingLine);
-                Authorization.authorization();
+                Menu.mainMenu();
             } else {
                 if (lines(path , StandardCharsets.UTF_8).anyMatch((password + getNewPassword())::equals) && lines(path , StandardCharsets.UTF_8).anyMatch(("E-mail: " + getGmail())::equals)) {
                     if (getNewLogin().equals("FantaPetro"))
@@ -60,6 +60,8 @@ public class ActionsWithData extends Data implements getLine {
 
         }
     }
+
+    // добавлення депозиту
     public static void addDeposit() throws IOException, InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, ShortBufferException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
         Menu.clearConsole();
         Validation.contributionsValidation();
@@ -78,6 +80,7 @@ public class ActionsWithData extends Data implements getLine {
         Menu.actionsWithAccounts();
     }
 
+    // зміна інформації про нас
     public static void changeInformationAboutUs() throws IOException, InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, ShortBufferException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
         Menu.clearConsole();
         out.println(dividingLine + "\n" + "|Нова інформація:                                                  |" + "\n" + dividingLine);
@@ -90,8 +93,10 @@ public class ActionsWithData extends Data implements getLine {
                     dividingLine);
             Menu.adminMenu();
         }
+        Menu.adminMenu();
     }
 
+    // вивід інформаці\ про нас
     public static void informationAboutUs() throws IOException, InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, ShortBufferException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
         Menu.clearConsole();
         if (Files.exists((Path.of(informationAboutUs)))) {
@@ -111,11 +116,12 @@ public class ActionsWithData extends Data implements getLine {
                 Scanner scanner = new Scanner(reader);
                 while (scanner.hasNextLine())
                     System.out.println(scanner.nextLine());
-                Menu.mainMenu();
+                informationAboutUs();
             }
         }
     }
 
+    //переглянути власний депозит
     public static void viewDeposit() throws IOException, InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, ShortBufferException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
         Menu.clearConsole();
         List<String> fileContent = new ArrayList<>(Files.readAllLines(Path.of(userData) , StandardCharsets.UTF_8));

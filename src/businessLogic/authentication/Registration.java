@@ -26,8 +26,9 @@ public class Registration extends Check {
         Validation.totalCheck();
         Registration.Save.saveUser();
     }
-
+    //клас який функціунує тіьки з redistration
     public static class Save {
+        //зберігання новго юзера
         public static void saveUser() throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, IOException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, ShortBufferException {
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(userData , true))) {
                 Check.inputData();

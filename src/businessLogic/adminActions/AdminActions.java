@@ -27,8 +27,9 @@ import static java.lang.System.out;
 @SuppressWarnings("ALL")
 public class AdminActions extends Data implements getLine {
     @SuppressFBWarnings("NM_METHOD_NAMING_CONVENTION")
+    // Показує писок користувачі
     public static void veiwList() throws IOException, InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, ShortBufferException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
-        int line = 1;
+        int line = 1; //магічна константа
         try (var reader = new BufferedReader(new FileReader(userData))) {
             while (reader.readLine() != null) {
                 line++;
@@ -47,6 +48,7 @@ public class AdminActions extends Data implements getLine {
     }
 
     @SuppressFBWarnings("REC_CATCH_EXCEPTION")
+    //Видалення даних(рядка)
     public static void deleadUser() throws IOException, InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, ShortBufferException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
         veiwList();
         try {
@@ -82,6 +84,7 @@ public class AdminActions extends Data implements getLine {
         }
     }
 
+    //Змінити дані(рядок)
     public static void rewu() throws IOException, InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, ShortBufferException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
         veiwList();
         Validation.lineForChangeValidation();
@@ -97,5 +100,6 @@ public class AdminActions extends Data implements getLine {
         }
 
         Files.write(Path.of(userData) , fileContent , StandardCharsets.UTF_8);
+        Menu.adminMenu();
     }
 }

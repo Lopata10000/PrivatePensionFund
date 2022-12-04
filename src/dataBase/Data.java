@@ -110,7 +110,7 @@ public class Data {
     public static void setNewPassword(String newPassword) {
         Data.newPassword = newPassword;
     }
-
+// хешування
     public class Encryption {
         public static void encryptionGmail() {
             String sha256hex = String.valueOf(Hashing.sha256().hashString(getGmail() , StandardCharsets.UTF_8));

@@ -1,7 +1,6 @@
 package businessLogic.authentication;
 
 import businessLogic.userActions.ActionsWithData;
-import dataBase.Data;
 import intarface.Menu;
 
 import static dataBase.Data.*;
@@ -24,7 +23,6 @@ public class Authorization extends Check {
                 dividingLine);
         setNewPassword(scanner.nextLine());
         Check.inputData();
-        Data.Encryption.encryptionGmail();
         ActionsWithData.checkAuthorization();
 
 

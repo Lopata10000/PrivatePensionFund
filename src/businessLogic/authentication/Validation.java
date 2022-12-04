@@ -68,6 +68,7 @@ public class Validation extends Data implements getLine {
         return matcherLogin.matches();
     }
 
+    //Валідація логіну
     public static void loginValidation() {
         out.println(dividingLine + "\n" +
                 "|Ваш логін:                                                        |" + "\n" +
@@ -100,6 +101,7 @@ public class Validation extends Data implements getLine {
         }
     }
 
+    //валідація паролю
     public static void passwordValidation() {
         out.println(dividingLine + "\n" +
                 "|Ваш пароль:                                                       |" + "\n" +
@@ -119,6 +121,7 @@ public class Validation extends Data implements getLine {
         }
     }
 
+    //Валідація пошти
     public static void gmailValidation() {
         out.println(dividingLine + "\n" +
                 "|Ваш e-mail:                                                       |" + "\n" +
@@ -145,6 +148,7 @@ public class Validation extends Data implements getLine {
         }
     }
 
+    //остаточна перевірка
     public static void totalCheck() throws IOException, InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, ShortBufferException {
         if (Validation.isValidPassword()) {
             Registration.Save.saveUser();
@@ -153,6 +157,7 @@ public class Validation extends Data implements getLine {
         }
     }
 
+    //валідація віку
     public static void ageValidation() {
         out.println(dividingLine + "\n" +
                 "|Уведіть свій вік:                                                 |" + "\n" +
@@ -172,6 +177,7 @@ public class Validation extends Data implements getLine {
         }
     }
 
+    // валідація початкового вкладу
     public static void contributionsValidation() {
         out.println(dividingLine + "\n" +
                 "|Уведіть свій перший вклад.                                        |" + "\n" +
@@ -185,6 +191,7 @@ public class Validation extends Data implements getLine {
         }
     }
 
+    //валідація регулярного вкладу
     @SuppressWarnings("NonAsciiCharacters")
     public static void regularContributionsValidation() {
         out.println(dividingLine + "\n" +
@@ -200,6 +207,7 @@ public class Validation extends Data implements getLine {
 
     }
 
+    // валідація рядка для зміни
     public static void lineForChangeValidation() {
         out.println(dividingLine + "\n" +
                 "|Уведіть рядок який ви хочете змінити(Повний рядок окрім номера рядка)|" + "\n" +

@@ -3,6 +3,8 @@
     <output-path>$PROJECT_DIR$/out/artifacts/PrivatePensionFund_jar</output-path>
     <root id="archive" name="PrivatePensionFund.jar">
       <element id="module-output" name="PrivatePensionFund" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/github/spotbugs/spotbugs-annotations/4.0.1/spotbugs-annotations-4.0.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$USER_HOME$/Downloads/guava-19.0.jar" path-in-jar="/" />
     </root>
   </artifact>
