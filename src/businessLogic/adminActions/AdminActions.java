@@ -28,6 +28,7 @@ import static java.lang.System.out;
 public class AdminActions extends Data implements getLine {
     @SuppressFBWarnings("NM_METHOD_NAMING_CONVENTION")
     public static void veiwList() throws IOException, InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, ShortBufferException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
+       Menu.clearConsole();
         int line = 1;
         try (var reader = new BufferedReader(new FileReader(userData))) {
             while (reader.readLine() != null) {
@@ -48,6 +49,7 @@ public class AdminActions extends Data implements getLine {
 
     @SuppressFBWarnings("REC_CATCH_EXCEPTION")
     public static void deleadUser() throws IOException, InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, ShortBufferException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
+        Menu.clearConsole();
         veiwList();
         try {
             out.println(dividingLine + "\n" +
@@ -83,6 +85,7 @@ public class AdminActions extends Data implements getLine {
     }
 
     public static void rewu() throws IOException, InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, ShortBufferException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
+        Menu.clearConsole();
         veiwList();
         Validation.lineForChangeValidation();
         String changeContent = scanner.nextLine();

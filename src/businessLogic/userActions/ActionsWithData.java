@@ -26,37 +26,49 @@ import java.util.List;
 import java.util.Scanner;
 
 import static java.lang.System.out;
-import static java.nio.file.Files.lines;
 
 @SuppressWarnings({"resource" , "NonAsciiCharacters"})
 public class ActionsWithData extends Data implements getLine {
     private static final String password = "Password: ";
 
     public static void checkAuthorization() {
-        try {
-            Path path = Paths.get(userData);
-            if (lines(path , StandardCharsets.UTF_8).noneMatch(("Login: " + getNewLogin())::equals)) {
-                out.println(dividingLine + "\n" +
-                        "|Такого акаунту немає.                                             |" + "\n" +
-                        dividingLine);
-                Authorization.authorization();
+        try (FileReader reader = new FileReader(userData)) {
+            if (Files.lines(Paths.get(userData) , StandardCharsets.UTF_8).anyMatch(("Login: " + getNewLogin())::equals)
+                    && Files.lines(Paths.get(userData) , StandardCharsets.UTF_8).anyMatch(("Password: " + getNewPassword())::equals)
+                    && Files.lines(Paths.get(userData) , StandardCharsets.UTF_8).anyMatch(("E-mail: " + getGmail())::equals)) {
+                if (getNewLogin().equals("FantaPetro"))
+                    Menu.adminMenu();
+                else
+                    Menu.actionsWithAccounts();
             } else {
-                if (lines(path , StandardCharsets.UTF_8).noneMatch((password + getNewPassword())::equals) || lines(path , StandardCharsets.UTF_8).noneMatch(("E-mail: " + getGmail())::equals)) {
-                    out.println(dividingLine + "\n" +
-                            "|Такого акаунту немає.                                             |" + "\n" +
-                            dividingLine);
-                    Authorization.authorization();
-                } else {
-                    if (getNewLogin().equals("FantaPetro"))
-                        Menu.adminMenu();
-                    else
-                        Menu.actionsWithAccounts();
-                }
+                out.println("|------------------------------------------------------------------|" + "\n" +
+                        "|Такого акаунту немає.                                             |" + "\n" +
+                        "|------------------------------------------------------------------|");
+                Authorization.authorization();
             }
         } catch (Exception ex) {
             out.println("Немає даних");
         }
     }
+
+    public static void saveUser() throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, IOException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, ShortBufferException {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(userData , true))) {
+            writer.append("|------------------------------------------------------------------|" + "\n" +
+                    "Login: " + getNewLogin() + "\n" +
+                    "E-mail: " + getGmail() + "\n" +
+                    "Password: " + getNewPassword() + "\n");
+            writer.close();
+            out.println(dividingLine + "\n" +
+                    "|Вас зареєстровано успішно!                                        |" + "\n" +
+                    dividingLine);
+            if (getNewLogin().equals("FantaPetro"))
+                Menu.adminMenu();
+            else
+                Menu.actionsWithAccounts();
+            Menu.actionsWithAccounts();
+        }
+    }
+
     public static void addDeposit() throws IOException, InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, ShortBufferException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
         Validation.contributionsValidation();
         Validation.ageValidation();

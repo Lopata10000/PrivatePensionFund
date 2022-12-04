@@ -28,6 +28,7 @@ public class Menu implements getLine {
     public static final String uKnowActions = "Незрозуміла опція";
 
     public static void mainMenu() throws IOException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, InvalidAlgorithmParameterException, ShortBufferException {
+        clearConsole();
         out.println("""
 
                 |--======================================================================-- Пенсійний фонд ''Чахлики'' --========================================================================--|
@@ -81,6 +82,7 @@ public class Menu implements getLine {
     }
 
     public static void actionsWithAccounts() throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, IOException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, ShortBufferException {
+        clearConsole();
         out.println("|------------------------------------------------------------------|" + "\n" +
                 "| Ви увійшли як: " + getNewLogin() + "|" + "\n" +
                 dividingLine + "\n" +
@@ -111,21 +113,22 @@ public class Menu implements getLine {
 
     @SuppressFBWarnings("SF_SWITCH_FALLTHROUGH")
     public static void adminMenu() throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, IOException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, ShortBufferException {
+        clearConsole();
         out.printf("| Ви ввійшли як: " + getNewLogin() + "|" + "\n" +
                 dividingLine + "\n" +
-                "|Що ви бажаєте зробити? |" + "\n" +
+                "|Що ви бажаєте зробити?                                            |" + "\n" +
                 dividingLine + "\n" +
-                "|1: Переглянути користувачів. |" + "\n" +
+                "|1: Переглянути користувачів.                                      |" + "\n" +
                 dividingLine + "\n" +
-                "|2: Видалити дані. |" + "\n" +
+                "|2: Видалити дані.                                                 |" + "\n" +
                 dividingLine + "\n" +
-                "|3: Відредагувати дані. |" + "\n" +
+                "|3: Відредагувати дані.                                            |" + "\n" +
                 dividingLine + "\n" +
-                "|4: Додати користувача. |" + "\n" +
+                "|4: Додати користувача.                                            |" + "\n" +
                 dividingLine + "\n" +
-                "|5: Змінити дані про фонд. |" + "\n" +
+                "|5: Змінити дані про фонд.                                         |" + "\n" +
                 dividingLine + "\n" +
-                "|6: Вийти |" + "\n" +
+                "|6: Вийти                                                          |" + "\n" +
                 dividingLine);
         command = scanner.nextLine();
 

@@ -1,9 +1,9 @@
 package businessLogic.authentication;
 
-import dataBase.Data;
+import dataBase.Encryption;
 
 public abstract class Check {
       static void inputData() {
-            Data.Encryption.encryptionPassword();
+            Encryption.encryptionPassword();
       }
 }

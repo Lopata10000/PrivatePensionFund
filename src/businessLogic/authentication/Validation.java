@@ -1,7 +1,9 @@
 package businessLogic.authentication;
 
+import businessLogic.userActions.ActionsWithData;
 import businessLogic.userActions.getLine;
 import dataBase.Data;
+import dataBase.Encryption;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -131,7 +133,7 @@ public class Validation extends Data implements getLine {
             Validation.gmailValidation();
         }
         try {
-            Data.Encryption.encryptionGmail();
+            Encryption.encryptionGmail();
             if (Files.lines(Paths.get(userData) , StandardCharsets.UTF_8)
                     .anyMatch(("E-mail: " + getGmail())::equals)) {
                 out.println(dividingLine + "\n" +
@@ -147,7 +149,7 @@ public class Validation extends Data implements getLine {
 
     public static void totalCheck() throws IOException, InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, ShortBufferException {
         if (Validation.isValidPassword()) {
-            Registration.Save.saveUser();
+            ActionsWithData.saveUser();
         } else {
             Registration.registration();
         }
