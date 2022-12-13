@@ -1,8 +1,6 @@
-package businessLogic.authentication;
+package BuisnesLogic;
 
-import businessLogic.userActions.ActionsWithData;
-import dataBase.Encryption;
-import intarface.Menu;
+import intarface.ShowInformation;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -13,15 +11,11 @@ import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
-public class Registration extends Check {
+public class Registration {
     public static void registration() throws IOException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, InvalidAlgorithmParameterException, ShortBufferException {
-        Menu.clearConsole();
-        Validation.loginValidation();
-        Validation.gmailValidation();
-        Validation.passwordValidation();
+        ShowInformation.loginValidation();
+        ShowInformation.gmailValidation();
+        ShowInformation.passwordValidation();
         Validation.totalCheck();
-        Encryption.encryptionGmail();
-        Encryption.encryptionPassword();
-        ActionsWithData.saveUser();
     }
 }

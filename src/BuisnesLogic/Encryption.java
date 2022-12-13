@@ -1,10 +1,10 @@
-package dataBase;
+package BuisnesLogic;
 
 import com.google.common.hash.Hashing;
 
 import java.nio.charset.StandardCharsets;
 
-import static dataBase.Data.*;
+import static DataAccess.Data.*;
 
 public class Encryption {
     public static void encryptionGmail() {

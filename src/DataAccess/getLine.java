@@ -1,4 +1,4 @@
-package businessLogic.userActions;
+package DataAccess;
 
 public interface getLine {
     String dividingLine = "|------------------------------------------------------------------|";
